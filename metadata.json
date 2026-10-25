@@ -1,0 +1,8 @@
+{
+  "name": "KEDGE Insurance Brokers Ltd",
+  "description": "Official corporate website and risk advisory portal for KEDGE Insurance Brokers Ltd, providing comprehensive insurance broking, risk management, and claims support across Nigeria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

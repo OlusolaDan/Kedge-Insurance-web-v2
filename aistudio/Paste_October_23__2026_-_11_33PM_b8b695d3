@@ -1,0 +1,978 @@
+# PROJECT: KEDGE INSURANCE BROKERS LTD — COMPLETE CORPORATE WEBSITE DEVELOPMENT FROM SCRATCH
+
+## 1. PROJECT MANDATE
+
+You are an autonomous Senior Software Architect, Full-Stack Web Developer, UI/UX Designer, Accessibility Specialist, Nigerian Insurance Industry Content Specialist, Security Engineer and Quality Assurance Engineer.
+
+Your assignment is to design, develop, test and document a complete, modern, responsive and functional corporate website for KEDGE Insurance Brokers Ltd, a Nigerian insurance brokerage firm.
+
+You are building a new website from the beginning, not merely modifying an existing hero section or patching an existing design.
+
+The finished product must be a real, multi-page corporate website with working navigation, properly structured insurance services, corporate philosophy, industry-specific content, functioning enquiry forms, appropriate backend processing, responsive layouts and maintainable source code.
+
+Do not deliver only:
+- A project plan.
+- A design specification.
+- A static screenshot.
+- A homepage mockup.
+- A collection of disconnected HTML pages.
+- Buttons that do nothing.
+- Forms that simulate successful submissions without actually processing them.
+- Placeholder content presented as completed company information.
+
+Build the working website in the available development workspace, verify it and provide all source files required for continued development.
+
+Work independently using sound engineering judgement. Ask questions only when an essential decision cannot safely be resolved from the requirements or existing approved company information.
+
+---
+
+# 2. COMPANY IDENTITY AND BRAND DIRECTION
+
+Company name: KEDGE Insurance Brokers Ltd.
+
+Brand slogan: “With You From Now, Into The Future.”
+
+Target market: Individuals, families, SMEs, corporate organisations, commercial enterprises, institutions and other insurable interests operating in Nigeria.
+
+Primary geographical market: Nigeria, with Lagos and other Nigerian commercial centres represented where relevant.
+
+Brand personality:
+- Professional.
+- Trustworthy.
+- Modern.
+- Client-focused.
+- Knowledgeable.
+- Dependable.
+- Forward-looking.
+- Technologically progressive.
+
+## Brand colours
+
+Use a consistent corporate colour system:
+
+- Deep navy blue: primary corporate colour.
+- White: primary background and text contrast colour.
+- KEDGE red: primary accent and CTA colour.
+- Light blue and restrained grey: supporting colours.
+
+Use the existing approved KEDGE logo if a genuine logo asset is available. Inspect the supplied project assets before creating a replacement.
+
+Do not invent a new company logo if the approved one is available. Never distort, stretch or duplicate the logo unnecessarily.
+
+If official contact details, registration details, licence details or company-specific statements are unavailable, create clearly identified configuration fields and report the missing information. Never fabricate these details.
+
+---
+
+# 3. PROJECT OUTCOME
+
+Create a premium corporate website that communicates KEDGE's insurance brokerage capabilities, builds confidence, educates Nigerian insurance customers and converts visitors into genuine enquiries.
+
+The website must answer five questions clearly:
+
+1. Who is KEDGE Insurance Brokers Ltd?
+2. What does the company do?
+3. What insurance classes and products can it help clients arrange?
+4. Which people, businesses and industries can benefit from its services?
+5. How can a prospective client contact KEDGE or request a quote?
+
+The website must work on desktop computers, laptops, tablets and mobile phones.
+
+Use a shared design system and reusable components rather than implementing every page independently.
+
+---
+
+# 4. DEVELOPMENT AND WORKSPACE RULES
+
+Before coding, inspect the available workspace and identify the approved assets and any project-specific constraints.
+
+Because this is a from-scratch build:
+
+- Establish a clean, coherent project structure.
+- Choose an appropriate, actively supported technology stack.
+- Prefer TypeScript, React and a suitable modern build tool for a maintainable multi-page application, unless the development environment imposes a justified alternative.
+- Use a consistent routing solution.
+- Use reusable components and design tokens.
+- Use a secure backend for server-side form handling.
+- Use environment variables for configuration and secrets.
+- Include dependency and runtime documentation.
+
+Do not assume that the existing website's current framework, styling or architecture must be preserved.
+
+However, inspect the available logo, approved content, images, requirements and configuration before replacing any assets.
+
+Do not delete useful source material or overwrite unrelated projects.
+
+Do not change the live website, production DNS, hosting configuration, company email, production databases or other production systems without explicit authorisation.
+
+Build and test locally first.
+
+---
+
+# 5. WEBSITE INFORMATION ARCHITECTURE
+
+Build the following pages as a coherent website.
+
+## A. Home
+
+Route: /
+
+Sections:
+1. Global navigation.
+2. Hero section.
+3. Brief company introduction.
+4. Insurance services overview.
+5. Industries served.
+6. Why choose KEDGE.
+7. Risk management and advisory overview.
+8. Corporate Philosophy summary.
+9. Insurance education and insights.
+10. Clear quote-request CTA.
+11. Contact summary.
+12. Comprehensive footer.
+
+The homepage must provide a useful overview without overwhelming visitors with excessive text or displaying every insurance product at once.
+
+Use clear pathways to detailed service pages and the complete insurance directory.
+
+## B. About Us
+
+Route: /about
+
+Include:
+- Company overview.
+- Role of an insurance broker.
+- KEDGE's approach to understanding client risks.
+- How the company helps clients evaluate insurance options.
+- Client service philosophy.
+- Corporate Philosophy: Vision, Mission and Core Values.
+- Appropriate CTA to discuss insurance needs.
+
+Do not invent the company's founding date, number of employees, awards, achievements, client count or history.
+
+## C. Insurance Services
+
+Route: /services
+
+Build a comprehensive insurance directory, organised into logical categories.
+
+Include a service search or category filtering mechanism if it improves usability.
+
+Provide individual service detail pages or equivalent accessible detail views.
+
+Each published service must have a clear name, description, intended audience, relevant risks, coverage considerations and enquiry CTA.
+
+## D. Industries
+
+Route: /industries
+
+Create dedicated content for relevant Nigerian sectors, including:
+- SMEs and commercial enterprises.
+- Manufacturing.
+- Construction and engineering.
+- Logistics, haulage and transportation.
+- Importers, exporters and trading businesses.
+- Marine and cargo operations.
+- Oil and gas, where applicable.
+- Agriculture and agribusiness.
+- Professional services.
+- Retail and distribution.
+- Hospitality and property-related businesses.
+- Corporate organisations and institutions.
+
+For each industry, explain typical risk exposures and potentially relevant insurance solutions.
+
+Do not imply that every industry-specific product is available through KEDGE unless its service scope has been confirmed.
+
+## E. Risk Management
+
+Route: /risk-management
+
+Explain the role of risk assessment and insurance planning.
+
+Include:
+- Risk identification.
+- Exposure assessment.
+- Risk prioritisation.
+- Insurance needs assessment.
+- Risk mitigation considerations.
+- Policy review and renewal planning.
+- Claims notification and support.
+- Business continuity considerations.
+
+Clearly distinguish insurance brokerage services from specialist consulting services that the company has not confirmed it provides.
+
+## F. Insights
+
+Route: /insights
+
+Create an educational insurance content section relevant to Nigeria.
+
+Topics may include:
+- Understanding insurance policy documents.
+- Motor insurance requirements.
+- Property and fire risk.
+- Insurance for Nigerian SMEs.
+- Marine cargo risks.
+- Liability exposures.
+- Claims documentation and notification.
+- Policy renewal planning.
+- Insurance myths and misconceptions.
+- Risk management for growing businesses.
+
+Articles must have meaningful titles, readable layouts, appropriate dates where verified and references for material regulatory claims.
+
+Do not fabricate publication dates, author credentials, news or regulatory updates.
+
+## G. Contact Us
+
+Route: /contact
+
+Include:
+- Verified company contact details.
+- Telephone and email links where supplied.
+- Approved business address where supplied.
+- A functional enquiry form.
+- Expected response information only where the company has approved it.
+- Links to the privacy policy and relevant legal notices.
+
+Do not publish placeholder addresses or invented contact information as genuine company details.
+
+## H. Request a Quote
+
+Route: /quote
+
+Build a functional quote-request workflow.
+
+Form fields should be relevant to the selected insurance category and may include:
+- Full name.
+- Business or organisation name, where applicable.
+- Email address.
+- Telephone number.
+- Insurance category.
+- Description of the insurance requirement.
+- Relevant additional details.
+- Consent to the applicable privacy notice.
+
+Use conditional fields where they genuinely improve the experience.
+
+Do not collect unnecessary sensitive information, identity documents or financial data at the initial enquiry stage.
+
+Implement server-side validation, clear field-level error messages, submission feedback and appropriate protection against spam and abuse.
+
+A submission must be processed by the configured backend. Never display a successful submission message when the server has rejected or failed to store the enquiry.
+
+## I. Claims Assistance
+
+Route: /claims-assistance
+
+Explain how clients should notify the relevant parties of a potential claim and how KEDGE may assist within its actual brokerage role.
+
+Include a practical list of potentially relevant documents, clearly noting that requirements depend on the policy and circumstances.
+
+Do not promise that a claim will be accepted or paid.
+
+## J. Renewal Enquiry
+
+Route: /renewal-enquiry
+
+Provide an enquiry route for clients wishing to review or renew existing insurance arrangements.
+
+Collect only information appropriate for the enquiry. Do not request existing policy documents or personal records through insecure public file uploads.
+
+## K. Frequently Asked Questions
+
+Route: /faq
+
+Answer common Nigerian insurance questions using concise, accurate explanations.
+
+Include questions about brokers, policy selection, premiums, claims, renewals, compulsory insurance and policy exclusions.
+
+Verify regulatory and legal statements before publication.
+
+## L. Privacy Policy
+
+Route: /privacy-policy
+
+Provide a clearly written privacy notice describing the website's actual data collection and processing practices.
+
+Address applicable Nigerian data protection requirements, including the Nigeria Data Protection Act 2023 where applicable.
+
+Document:
+- Information collected.
+- Purposes of processing.
+- Applicable lawful bases, where relevant.
+- Service providers and recipients, where applicable.
+- Retention principles.
+- Security measures.
+- Applicable data-subject rights.
+- Contact or complaint channels.
+- Cookies or analytics, if used.
+
+Do not invent privacy practices that the implemented system does not follow. Flag the notice for appropriate legal and management review.
+
+## M. Terms of Use
+
+Route: /terms
+
+Provide clear, appropriately reviewed terms governing use of the website and its informational content.
+
+Do not present the terms as a substitute for actual insurance policy wording or legal advice.
+
+## N. Custom Not Found Page
+
+Route: /404
+
+Provide a branded, helpful page with links back to Home, Services and Contact Us.
+
+Ensure invalid routes do not silently render unrelated pages.
+
+---
+
+# 6. HERO SECTION — PREMIUM CORPORATE DESIGN
+
+Create a visually compelling, professional hero section.
+
+Use a full-width background image or a carefully implemented video treatment featuring relevant business and commercial risk environments.
+
+Preferred visual subjects:
+- Diverse professionals interacting in a business environment.
+- Aerial views of cargo ships and commercial ports.
+- A worker handling a circuit board or industrial equipment.
+- Business people meeting in a corporate setting.
+
+If video is used, provide a reliable fallback image, avoid audio autoplay, respect reduced-motion preferences and ensure that media does not delay access to the main content.
+
+Use approved, licensed or appropriately sourced assets. Do not rely on broken remote image links or unverified copyrighted media.
+
+Apply a balanced navy overlay or gradient so white text remains readable.
+
+Suggested hero copy:
+
+Eyebrow:
+INSURANCE BROKING | RISK ADVISORY
+
+Headline:
+“Protection for What Matters. Confidence for What Comes Next.”
+
+Supporting text:
+“From businesses and infrastructure to people and valuable assets, KEDGE Insurance Brokers helps clients understand their risks, explore appropriate insurance protection and make informed insurance decisions.”
+
+Primary CTA:
+“Request a Quote”
+
+Secondary CTA:
+“Explore Our Services”
+
+Supporting trust statements:
+“Trusted guidance for people and businesses.”
+“Risk-led advisory approach.”
+
+Treat the supplied wording as draft marketing copy and ensure it does not promise unverified outcomes.
+
+## Hero design requirements
+
+- Strong headline hierarchy.
+- Balanced text width.
+- Responsive typography.
+- Controlled image cropping.
+- High contrast.
+- Professional spacing.
+- Consistent CTA dimensions.
+- Smooth but restrained transitions.
+- No clutter or unnecessary decorative elements.
+
+The hero must look intentional and premium on desktop and mobile.
+
+---
+
+# 7. CORPORATE PHILOSOPHY
+
+Create a dedicated, prominent Corporate Philosophy section on the About Us page.
+
+Also display a concise version on the homepage if it improves the content hierarchy.
+
+## Vision
+
+Suggested draft:
+
+“To be a trusted insurance brokerage and risk advisory partner, recognised for professional excellence, innovative solutions and lasting value to the people and businesses we serve.”
+
+## Mission
+
+Suggested draft:
+
+“To help individuals, businesses and organisations identify, understand and manage their risks by providing professional insurance advice, suitable insurance solutions, dependable client service and support throughout the insurance lifecycle.”
+
+## Core Values
+
+Create a polished, responsive grid for the following proposed values:
+
+Integrity — Acting honestly, ethically and transparently.
+
+Professionalism — Applying sound insurance knowledge, diligence and professional standards.
+
+Client Focus — Understanding clients' needs and providing relevant insurance guidance.
+
+Accountability — Taking responsibility for service delivery, communication and commitments.
+
+Excellence — Pursuing high standards and continuous improvement.
+
+Innovation — Applying appropriate technology and better processes to improve client service.
+
+Trust — Building lasting relationships through confidentiality, consistency and reliability.
+
+These statements are proposed content unless verified company-approved wording is available.
+
+Preserve existing approved company statements if supplied. Clearly flag proposed statements for management approval. Do not represent drafts as officially approved corporate policy.
+
+---
+
+# 8. COMPLETE INSURANCE SERVICES AND NAICOM ALIGNMENT
+
+This is a critical requirement.
+
+The website must not be limited to the few insurance products commonly included in generic templates.
+
+Identify the relevant insurance classes recognised under the current Nigerian regulatory framework and applicable NAICOM classification.
+
+Consult authoritative NAICOM publications and applicable Nigerian legislation where research tools are available.
+
+Create a comprehensive coverage inventory before finalising the directory.
+
+## Insurance categories to investigate
+
+Use the following as an initial checklist, not as a definitive statutory classification.
+
+### Motor Insurance
+- Motor Third-Party Insurance.
+- Motor Comprehensive Insurance.
+- Other applicable motor insurance products.
+
+### Marine and Aviation Insurance
+- Marine Cargo Insurance.
+- Marine Hull Insurance.
+- Other applicable marine covers.
+- Aviation Insurance and related products where applicable.
+
+### Property and Engineering Insurance
+- Fire and Special Perils.
+- Burglary and Housebreaking.
+- All Risks Insurance.
+- Contractors' All Risks.
+- Erection All Risks.
+- Machinery Breakdown.
+- Electronic Equipment Insurance.
+- Other relevant property and engineering covers.
+
+### Liability Insurance
+- Public Liability.
+- Professional Indemnity.
+- Product Liability.
+- Employers' Liability where applicable.
+- Other relevant liability products.
+
+### Life and Personal Insurance
+- Individual Life Insurance.
+- Group Life Insurance.
+- Personal Accident Insurance.
+- Group Personal Accident.
+- Other applicable life and personal insurance products.
+
+### Commercial and Specialist Insurance
+- Goods-in-Transit Insurance.
+- Fidelity Guarantee.
+- Money Insurance.
+- Business Interruption.
+- Agricultural Insurance.
+- Oil and Gas Insurance.
+- Other applicable specialist products.
+
+Investigate the complete relevant official classification rather than stopping at this list.
+
+Distinguish between:
+1. Official classes of insurance business.
+2. Commercial products available within those classes.
+3. Compulsory insurance requirements.
+4. Optional insurance products.
+5. Risk management and advisory services.
+
+Do not publish an unsupported claim that KEDGE is authorised to arrange a particular class or has a specialist capability that has not been confirmed.
+
+For every service included in the public directory, provide:
+- Name and category.
+- Concise description.
+- Typical insured interests.
+- Relevant risks.
+- General coverage considerations.
+- Important limitations or exclusions where appropriate.
+- A working enquiry CTA.
+
+Avoid unqualified promises that a particular loss will be covered or a claim will be paid.
+
+Maintain a structured service-content source so developers can update products and descriptions without duplicating markup across multiple files.
+
+Provide a separate internal coverage matrix containing the classification, source reference, website location, implementation status and outstanding verification requirements.
+
+Do not present the internal verification matrix as public marketing copy.
+
+---
+
+# 9. NAVIGATION AND GLOBAL LAYOUT
+
+Implement a shared global navigation component used throughout the website.
+
+Navigation should include:
+- Home.
+- About Us.
+- Services.
+- Industries.
+- Risk Management.
+- Insights.
+- Contact Us.
+- Request a Quote.
+
+Organise the Services menu so visitors can find the complete insurance directory without being overwhelmed by an enormous dropdown.
+
+Use appropriate submenus, service category pages or an accessible mega-menu if it improves usability.
+
+Requirements:
+- Identical branding across all pages.
+- Consistent navigation labels and destinations.
+- Active-page indication.
+- Functional dropdowns.
+- Keyboard support.
+- Visible focus states.
+- Accessible mobile menu.
+- Appropriate touch targets.
+- No broken or placeholder navigation links.
+
+The header may change appearance on scrolling if implemented reliably, but it must not obscure content or cause layout shifts.
+
+Build a consistent global footer with relevant navigation, verified company information, contact routes, privacy policy, terms and other appropriate legal links.
+
+Do not add a fake client portal or staff login. Any future internal insurance management application must have a separate, authorised entry point and appropriate security.
+
+---
+
+# 10. TYPOGRAPHY AND CONTENT PRESENTATION
+
+Establish a coherent typography system.
+
+Use semantic HTML heading levels and a logical page hierarchy.
+
+Recommended starting point:
+- H1: Main page heading.
+- H2: Primary section headings.
+- H3: Subsection and service headings.
+- H4: Nested headings when appropriate.
+- Body: Readable paragraph text.
+- Supporting text: Secondary information that remains comfortably legible.
+
+Use responsive font sizing where appropriate.
+
+Requirements:
+- Consistent font family and weights.
+- Readable line height.
+- Controlled paragraph width.
+- Consistent heading margins.
+- Proper paragraph spacing.
+- Well-structured lists.
+- Clear separation between sections.
+- Consistent page gutters.
+- Adequate white space.
+- No excessive uppercase copy.
+- No unnecessarily long, unbroken paragraphs.
+- No arbitrary manual line breaks used to force layout.
+
+Use reusable spacing and typography tokens.
+
+Avoid making every section visually identical. Create variety through meaningful layouts while preserving a consistent design language.
+
+---
+
+# 11. RESPONSIVE DESIGN
+
+The entire website must be responsive, not just the homepage.
+
+Verify the website at:
+- 1440px desktop.
+- 1280px laptop.
+- 1024px tablet landscape.
+- 768px tablet portrait.
+- 390px mobile.
+- 320px narrow mobile.
+
+Check:
+- Header and navigation.
+- Hero image and text.
+- Service grids.
+- Corporate Philosophy cards.
+- Industry pages.
+- Article layouts.
+- Contact and quote forms.
+- Footer.
+- Tables or coverage information.
+- Dropdowns and interactive elements.
+
+Acceptance criteria:
+- No unintended horizontal scrolling.
+- No overlapping text or components.
+- No clipped buttons.
+- No broken mobile navigation.
+- No unreadable text.
+- No important content hidden on smaller screens.
+- No images distorted by forced dimensions.
+- No inaccessible hover-only functionality.
+
+Use responsive CSS and the chosen framework's appropriate layout utilities. Do not build a separate mobile website unnecessarily.
+
+---
+
+# 12. FUNCTIONALITY AND BACKEND
+
+Build a genuine, testable enquiry workflow.
+
+The contact and quote forms must:
+- Validate inputs on the server.
+- Provide appropriate client-side feedback.
+- Reject invalid submissions.
+- Handle server errors safely.
+- Prevent duplicate submissions where appropriate.
+- Use secure request handling.
+- Provide clear submission confirmation only after successful processing.
+
+Use an appropriate server-side backend for the chosen architecture.
+
+For a local development environment, a controlled local persistence mechanism may be used temporarily if documented. It must not be mistaken for a production-ready enquiry workflow.
+
+For production readiness, design for a configured and monitored destination such as an authorised business inbox, secure administrative queue or approved CRM integration.
+
+Do not invent credentials or assume an email/CRM service is configured.
+
+If an external service is required, document the configuration needed and provide a safe setup procedure.
+
+Keep secrets on the server and out of browser code.
+
+Do not introduce a database merely to store basic website content if structured files or an appropriate content-management solution meet the requirements. Conversely, do not use an insecure local file as an unqualified production data store.
+
+---
+
+# 13. PRIVACY, SECURITY AND ACCESSIBILITY
+
+Implement security and privacy appropriate to a public corporate website.
+
+Requirements:
+- Server-side input validation.
+- Sensible request size limits.
+- Appropriate abuse prevention.
+- Safe error messages.
+- Secure handling of submitted personal information.
+- Appropriate security headers.
+- HTTPS readiness.
+- No exposed credentials.
+- No public access to private enquiry storage.
+- Minimal data collection.
+- A privacy notice matching actual system behaviour.
+- Keyboard-accessible navigation and forms.
+- Meaningful image alternatives.
+- Visible focus indicators.
+- Appropriate colour contrast.
+- Reduced-motion support.
+- No deceptive interactions.
+
+Account for applicable Nigerian data protection requirements.
+
+Do not claim full legal compliance without the required assessment and approval.
+
+Document production configuration, privacy review and any outstanding security controls.
+
+---
+
+# 14. CONTENT QUALITY AND NIGERIAN MARKET RELEVANCE
+
+All published content must be relevant to Nigerian insurance customers.
+
+Use clear, professional English and familiar Nigerian commercial examples.
+
+Explain insurance concepts in plain language without sacrificing accuracy.
+
+Where relevant, explain:
+- The role of NAICOM.
+- The role of an insurance broker.
+- Applicable compulsory insurance.
+- Differences between optional and legally required cover.
+- Premiums, deductibles, exclusions and policy limits.
+- Claims notification and documentation.
+- Renewals and changing risk exposures.
+- Insurance for SMEs.
+- Marine cargo and commercial transportation.
+- Property, fire and liability risks.
+
+Verify regulatory claims using current authoritative sources.
+
+Include citations or source references for material regulatory content in the appropriate content or internal documentation.
+
+Do not invent legislation, policy terms, official classifications, premiums, market statistics or company achievements.
+
+Do not present general educational content as individualised legal, financial or insurance advice.
+
+---
+
+# 15. VISUAL DESIGN QUALITY
+
+Use a premium, contemporary corporate design language.
+
+Design characteristics:
+- Strong typography.
+- Clean layouts.
+- Generous but disciplined spacing.
+- High-quality, relevant imagery.
+- Consistent red CTA treatment.
+- Deep navy sections used strategically.
+- Professional service cards.
+- Subtle shadows and borders.
+- Carefully controlled animations.
+- Consistent image proportions.
+- Clear section transitions.
+- Responsive grids.
+- Accessible interactive states.
+
+Use animations only where they improve understanding or provide appropriate feedback.
+
+Avoid:
+- Excessive gradients.
+- Too many floating elements.
+- Unnecessary glassmorphism.
+- Overly rounded cards everywhere.
+- Constant motion.
+- Excessive icons.
+- Dense paragraphs.
+- Repetitive generic stock imagery.
+- Decorative elements that compete with important content.
+
+The website should feel credible to corporate decision-makers, Nigerian SMEs and individuals seeking professional insurance guidance.
+
+---
+
+# 16. CLEAN CODEBASE AND MAINTAINABILITY
+
+Create a well-structured, readable and maintainable codebase.
+
+Use reusable components for:
+- Global header.
+- Navigation and dropdowns.
+- Footer.
+- Hero.
+- Service cards.
+- Industry cards.
+- Corporate Philosophy.
+- CTA sections.
+- Articles.
+- Forms.
+- Shared page layouts.
+
+Separate concerns appropriately between:
+- Application entry points.
+- Page components.
+- Shared components.
+- Routes.
+- Content data.
+- Styles and design tokens.
+- Server-side handlers.
+- Validation.
+- Configuration.
+- Tests.
+- Documentation.
+
+Use meaningful file names, component names and function names.
+
+Write concise comments for non-obvious logic and important architectural decisions. Do not comment every trivial line.
+
+Avoid:
+- Huge monolithic files.
+- Duplicated navigation markup.
+- Repeated hardcoded service lists across multiple pages.
+- Unused dependencies.
+- Broken imports.
+- Dead links.
+- Suppressed errors.
+- Hardcoded secrets.
+- Fake functionality.
+- Unnecessary framework changes after implementation has begun.
+
+Create a README documenting:
+- Project structure.
+- Technology stack.
+- Prerequisites.
+- Installation.
+- Local development.
+- Environment configuration.
+- Build and test commands.
+- How to add a page.
+- How to add or edit an insurance service.
+- How to configure enquiry processing.
+- Deployment requirements.
+- Known limitations.
+
+Include an example environment configuration file without actual secrets.
+
+---
+
+# 17. TESTING AND QUALITY ASSURANCE
+
+Do not declare the project complete merely because the development server starts.
+
+Implement and run appropriate checks for the chosen stack.
+
+At minimum:
+- Build verification.
+- Available lint checks.
+- Type checking if TypeScript is used.
+- Unit tests for important logic.
+- Form validation tests.
+- Backend submission tests.
+- Route and navigation tests where appropriate.
+- Broken-link checks where tooling permits.
+- Responsive viewport checks.
+- Basic accessibility checks.
+- Browser console inspection.
+- Image and asset loading checks.
+
+Verify the important user journeys:
+
+Journey 1:
+Home → Services → Service detail → Request a Quote.
+
+Journey 2:
+Home → About Us → Corporate Philosophy.
+
+Journey 3:
+Home → Industries → Relevant industry information → Enquiry.
+
+Journey 4:
+Home → Contact Us → Valid enquiry submission → Confirmed response.
+
+Journey 5:
+Mobile navigation → Services → Contact or Quote.
+
+Capture screenshots of the finished homepage, About Us, services directory, a service detail page, contact page and mobile homepage where browser tooling supports this.
+
+Fix defects found during verification.
+
+Report unavailable checks explicitly. Never fabricate screenshots, test results or successful submissions.
+
+---
+
+# 18. IMPLEMENTATION WORKFLOW
+
+Execute the project in stages, but continue through implementation and verification rather than stopping after planning.
+
+### Stage 1 — Foundation
+- Inspect the workspace and available approved assets.
+- Establish the project architecture.
+- Define brand colours, typography and spacing tokens.
+- Configure routes and shared layout components.
+
+### Stage 2 — Core website
+- Build the global navigation and footer.
+- Implement the homepage hero and main sections.
+- Build About Us and Corporate Philosophy.
+- Build the insurance directory and service detail pages.
+- Build Industries and Risk Management pages.
+
+### Stage 3 — Content and conversion
+- Implement Insights.
+- Implement Contact Us.
+- Implement Request a Quote.
+- Implement Claims Assistance, Renewal Enquiry and FAQ pages.
+- Add Privacy Policy, Terms and Not Found pages.
+- Connect real navigation and backend workflows.
+
+### Stage 4 — Responsive and accessibility work
+- Verify all major layouts.
+- Refine typography and spacing.
+- Test navigation and forms.
+- Address accessibility and performance issues.
+
+### Stage 5 — Final verification
+- Run build and available tests.
+- Inspect rendered pages.
+- Capture screenshots where supported.
+- Fix confirmed defects.
+- Update documentation.
+- Report remaining blockers.
+
+If you use an iterative coding workflow, maintain working checkpoints and avoid leaving the project in a broken state between stages.
+
+Do not stop after producing the architecture, the homepage or a set of mockups.
+
+---
+
+# 19. ACCEPTANCE CRITERIA
+
+The website is considered complete only when:
+
+1. The multi-page website runs locally.
+2. All required pages have been implemented.
+3. Global navigation works consistently across the website.
+4. The homepage has a premium, responsive hero.
+5. Corporate Philosophy contains Vision, Mission and Core Values.
+6. The insurance directory has been compared against authoritative NAICOM classification information and applicable Nigerian legislation.
+7. Missing applicable insurance coverage has been addressed or explicitly documented as awaiting verification.
+8. Unsupported claims about company authority, products and achievements are not presented as facts.
+9. Website content is relevant to the Nigerian insurance market.
+10. Typography, paragraph structure and spacing are consistent and readable.
+11. Desktop, tablet and mobile layouts have been tested to the extent supported by the environment.
+12. Contact and quote forms use genuine backend processing rather than simulated success.
+13. Privacy and security considerations are documented and implemented appropriately.
+14. Source code is organised, readable and maintainable.
+15. The README and configuration documentation are complete.
+16. Available automated checks have been executed and their actual results reported.
+17. Screenshots and test evidence are provided where tooling permits.
+18. No unapproved changes have been made to production systems.
+
+---
+
+# 20. FINAL DELIVERABLES
+
+Provide the following:
+
+A. Complete website source code.
+
+B. All required frontend and backend files.
+
+C. Reusable components and structured insurance service content.
+
+D. All required configuration templates, without secrets.
+
+E. Package and dependency configuration.
+
+F. README with installation, development, testing and maintenance instructions.
+
+G. An internal insurance coverage matrix with authoritative references and unresolved verification items.
+
+H. A list of pages and features implemented.
+
+I. Build, test and responsive verification results.
+
+J. Screenshots of key desktop and mobile pages where supported.
+
+K. A list of outstanding management approvals, service-scope confirmations and production deployment requirements.
+
+L. Clear instructions for running the completed website locally.
+
+If a feature depends on unavailable credentials, external services or unconfirmed company information, implement the safe parts, document the dependency and identify exactly what is required to finish it.
+
+Do not claim that the website is production-ready merely because it runs locally.
+
+## FINAL EXECUTION INSTRUCTION
+
+Begin building the website now.
+
+Inspect the workspace and approved assets, establish the project structure, implement the website page by page, connect real functionality, test the result and deliver the complete source code.
+
+Use your judgement to make reasonable design and engineering decisions without repeatedly asking for approval on routine implementation details.
+
+Prioritise completeness, professional design, Nigerian insurance accuracy, working functionality, maintainability and verifiable quality over unnecessary animations or decorative complexity.
+
+The expected outcome is a complete, working KEDGE Insurance Brokers Ltd corporate website—not another proposal or a partially implemented prototype.
