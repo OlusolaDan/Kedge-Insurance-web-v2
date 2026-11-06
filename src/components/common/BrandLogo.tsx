@@ -44,7 +44,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           KEDGE <span className="text-[#c51f1f]">INSURANCE</span>
         </span>
         <span className={`text-[10px] tracking-wider uppercase font-medium mt-0.5 ${subtextColor}`}>
-          Brokers Ltd
+          Brokers Ltd RC-476963
         </span>
         {showSlogan && (
           <span className="text-[11px] italic text-slate-400 mt-1">

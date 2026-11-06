@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { INSIGHT_ARTICLES } from '../data/insightsData';
 import { InsightArticle } from '../types';
-import { BookOpen, Clock, Calendar, ArrowRight, X, ShieldCheck, Share2 } from 'lucide-react';
+import { Clock, ArrowRight, ShieldCheck } from 'lucide-react';
 
 interface InsightsPageProps {
   navigate: (path: string) => void;
@@ -69,7 +69,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
                     <span>{activeArticle.readTime}</span>
                   </span>
                   <span>·</span>
-                  <span>{activeArticle.publishedDate}</span>
+                  {activeArticle.publishedDate && <span>{activeArticle.publishedDate}</span>}
                 </div>
               </div>
 
@@ -134,7 +134,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
               {INSIGHT_ARTICLES.map((article) => (
                 <article
                   key={article.id}
-                  className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                  className="premium-card bg-white rounded-xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 text-xs text-slate-500 mb-3">
@@ -158,7 +158,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                    <span className="text-slate-600 font-medium">{article.publishedDate}</span>
+                    <span className="text-slate-600 font-medium">{article.publishedDate || 'Technical guide'}</span>
                     <button
                       onClick={() => handleRead(article)}
                       className="font-semibold text-[#0a192f] hover:text-[#c51f1f] transition-colors inline-flex items-center"

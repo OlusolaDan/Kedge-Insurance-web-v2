@@ -1,0 +1,55 @@
+# KEDGE Insurance Brokers Ltd — Production cPanel Hosting Rules
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_env.c>
+  SetEnv KEDGE_ENQUIRY_EMAIL "info@kedgeinsure.com.ng"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Vite asset filenames contain content hashes, so immutable caching is safe.
+  # HTML remains short-lived so route and asset references can update promptly.
+  <FilesMatch "\.(?:css|js|mjs|json|map|jpg|jpeg|png|gif|svg|webp|avif|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "^(?:index|404)\.html$">
+    Header set Cache-Control "public, max-age=300, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^api/ - [L]
+  # Prerendered static public routes
+RewriteRule ^about/?$ about.html [L]
+RewriteRule ^services/?$ services.html [L]
+RewriteRule ^insurance-directory/?$ insurance-directory.html [L]
+RewriteRule ^services\/motor/?$ services/motor.html [L]
+RewriteRule ^services\/marine-aviation/?$ services/marine-aviation.html [L]
+RewriteRule ^services\/property-engineering/?$ services/property-engineering.html [L]
+RewriteRule ^services\/liability/?$ services/liability.html [L]
+RewriteRule ^services\/life-personal/?$ services/life-personal.html [L]
+RewriteRule ^services\/commercial-specialist/?$ services/commercial-specialist.html [L]
+RewriteRule ^industries/?$ industries.html [L]
+RewriteRule ^risk-management/?$ risk-management.html [L]
+RewriteRule ^insights/?$ insights.html [L]
+RewriteRule ^contact/?$ contact.html [L]
+RewriteRule ^quote/?$ quote.html [L]
+RewriteRule ^claims-assistance/?$ claims-assistance.html [L]
+RewriteRule ^renewal-enquiry/?$ renewal-enquiry.html [L]
+RewriteRule ^faq/?$ faq.html [L]
+RewriteRule ^privacy-policy/?$ privacy-policy.html [L]
+RewriteRule ^terms/?$ terms.html [L]
+RewriteRule ^coverage-matrix/?$ coverage-matrix.html [L]
+  # Existing files and directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+</IfModule>

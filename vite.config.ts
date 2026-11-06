@@ -5,9 +5,23 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    // Build assets with relative URLs so the site can also live in a cPanel subdirectory.
-    base: './',
+    // The site is deployed at the cPanel document root; root-relative assets keep
+    // direct visits to nested SPA routes working with the public .htaccess fallback.
+    base: '/',
     plugins: [react(), tailwindcss()],
+    build: {
+      // Emit even small SVGs as files so every image is uploaded from /images/.
+      assetsInlineLimit: 0,
+      rolldownOptions: {
+        output: {
+          assetFileNames: (assetInfo) => {
+            const imageExtensions = /\.(?:avif|bmp|gif|jpe?g|jfif|png|svg|webp)$/i;
+            const directory = imageExtensions.test(assetInfo.name ?? '') ? 'images' : 'assets';
+            return `${directory}/[name]-[hash][extname]`;
+          },
+        },
+      },
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

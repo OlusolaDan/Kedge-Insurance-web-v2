@@ -33,13 +33,19 @@ foreach ($required as $field) {
 }
 if (isset($data['email']) && (!is_string($data['email']) || !filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL))) $errors['email'] = 'Enter a valid email address.';
 if (isset($data['phone']) && (!is_string($data['phone']) || strlen(preg_replace('/\D+/', '', $data['phone'])) < 8)) $errors['phone'] = 'Enter a valid telephone number.';
+if ($type === 'quote' && isset($data['category']) && !in_array($data['category'], ['Motor', 'Marine & Aviation', 'Property & Engineering', 'Liability', 'Life & Personal', 'Commercial & Specialist', 'Other / Not sure'], true)) $errors['category'] = 'Select a valid insurance category.';
+foreach (['fullName' => 160, 'organization' => 200, 'email' => 254, 'phone' => 40, 'category' => 80, 'specificProduct' => 160, 'clientType' => 20, 'assetDetails' => 1000, 'estimatedSumInsured' => 100, 'startDate' => 30, 'description' => 5000, 'message' => 5000] as $field => $maxLength) {
+    if (isset($data[$field]) && (!is_string($data[$field]) || strlen($data[$field]) > $maxLength)) $errors[$field] = 'This field is too long or invalid.';
+}
 if (empty($data['privacyConsent'])) $errors['privacyConsent'] = 'Consent to the privacy notice is required.';
 if (isset($data['description']) && (!is_string($data['description']) || strlen(trim($data['description'])) < 10)) $errors['description'] = 'Please provide at least 10 characters.';
 if (isset($data['message']) && (!is_string($data['message']) || strlen(trim($data['message'])) < 10)) $errors['message'] = 'Please provide at least 10 characters.';
 if ($errors) respond(422, ['success' => false, 'message' => 'Please correct the highlighted fields.', 'errors' => $errors]);
 
-$recipient = getenv('KEDGE_ENQUIRY_EMAIL') ?: '';
-if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) respond(503, ['success' => false, 'message' => 'Enquiry email delivery is not configured. Please use a verified contact channel shown on the website.']);
+$recipient = getenv('KEDGE_ENQUIRY_EMAIL') ?: ($_SERVER['KEDGE_ENQUIRY_EMAIL'] ?? 'info@kedgeinsure.com.ng');
+if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+    $recipient = 'info@kedgeinsure.com.ng';
+}
 
 $labels = ['contact' => 'General enquiry', 'quote' => 'Quotation request', 'renewal' => 'Renewal review'];
 $prefix = ['contact' => 'ENQ', 'quote' => 'QUO', 'renewal' => 'RNW'][$type];
@@ -50,10 +56,21 @@ foreach ($data as $key => $value) {
     $label = ucfirst(preg_replace('/([a-z])([A-Z])/', '$1 $2', (string)$key));
     $lines[] = $label . ': ' . trim((string)$value);
 }
+$fromEmail = 'info@kedgeinsure.com.ng';
 $sender = trim((string)($data['email'] ?? ''));
-$headers = ['Content-Type: text/plain; charset=UTF-8'];
-if (filter_var($sender, FILTER_VALIDATE_EMAIL)) $headers[] = 'Reply-To: ' . $sender;
-if (!mail($recipient, 'Website ' . $labels[$type], implode("\n", $lines), implode("\r\n", $headers))) {
+$headers = [
+    'From: KEDGE Website <' . $fromEmail . '>',
+    'Reply-To: ' . (filter_var($sender, FILTER_VALIDATE_EMAIL) ? $sender : $fromEmail),
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=UTF-8',
+    'X-Mailer: PHP/' . phpversion(),
+];
+$subject = 'Website ' . $labels[$type] . ' - Ref: ' . $reference;
+$mailSent = @mail($recipient, $subject, implode("\r\n", $lines), implode("\r\n", $headers), '-f ' . $fromEmail);
+if (!$mailSent) {
+    $mailSent = @mail($recipient, $subject, implode("\r\n", $lines), implode("\r\n", $headers));
+}
+if (!$mailSent) {
     respond(503, ['success' => false, 'message' => 'We could not deliver your enquiry. Please try again or use a verified contact channel shown on the website.']);
 }
 

@@ -3,7 +3,7 @@ export interface CompanyConfiguration {
   tradingName: string;
   brandSlogan: string;
   brandPersonality: string[];
-  
+
   // Official Contact Channels (Real corporate communication desk)
   headOffice: {
     addressLine1: string;
@@ -23,6 +23,8 @@ export interface CompanyConfiguration {
     claimsSupport: string;
     renewals: string;
   };
+  // Leave empty until KEDGE confirms an authorised WhatsApp Business number.
+  whatsappBusinessNumber: string;
   officeHours: string;
 
   // Regulatory & Statutory Declarations
@@ -48,7 +50,7 @@ export interface CompanyConfiguration {
 
 export const COMPANY_CONFIG: CompanyConfiguration = {
   legalName: 'KEDGE Insurance Brokers Ltd',
-  tradingName: 'KEDGE Insurance Brokers',
+  tradingName: 'KEDGE Insurance Brokers Ltd',
   brandSlogan: 'With You From Now, Into The Future',
   brandPersonality: [
     'Professional',
@@ -62,8 +64,8 @@ export const COMPANY_CONFIG: CompanyConfiguration = {
   ],
 
   headOffice: {
-    addressLine1: '20, Oshidehin Street, off Akilo Road, Ogba-Ikeja',
-    city: 'Lagos',
+    addressLine1: '20, Oshidehin Street, off Akilo Road;',
+    city: 'Ogba-Ikeja',
     state: 'Lagos State',
     country: 'Nigeria',
     verificationStatus: 'Verified',
@@ -81,6 +83,7 @@ export const COMPANY_CONFIG: CompanyConfiguration = {
     claimsSupport: 'kegdeinsurancebrokers@yahoo.com',
     renewals: 'Verified',
   },
+  whatsappBusinessNumber: '2348146364641',
 
   officeHours: 'Monday to Friday, 8:30 AM to 4:30 PM (WAT)',
 
@@ -88,8 +91,8 @@ export const COMPANY_CONFIG: CompanyConfiguration = {
     regulatoryBody: 'National Insurance Commission (NAICOM)',
     naicomLicenceNumber: 'RBC-LIC-903',
     ncribMembershipNumber: 'NCRIB/MBR/896',
-    cacRegistrationNumber: 'RC-[Pending Corporate Affairs Commission Number]',
-    statusNote: 'Statutory registration and NAICOM operating licence details are designated configuration fields pending final board verification.',
+    cacRegistrationNumber: 'RC-476963',
+    statusNote: 'KEDGE is NAICOM-licensed and NCRIB-Member.',
   },
 
   philosophy: {

@@ -13,6 +13,7 @@ export interface InsuranceService {
   shortDescription: string;
   fullDescription: string;
   isCompulsoryInNigeria?: boolean;
+  compulsoryApplicability?: 'MANDATORY' | 'CONDITIONAL';
   statutoryBasis?: string;
   targetAudience: string[];
   keyRisksCovered: string[];
@@ -43,16 +44,6 @@ export interface InsightArticle {
     sectionHeading: string;
     paragraphs: string[];
   }[];
-}
-
-export interface CoverageMatrixItem {
-  officialClass: string;
-  naicomCategory: string;
-  commercialProducts: string[];
-  statutoryStatus: 'Compulsory in Nigeria' | 'Optional / Market Standard' | 'Regulatory Requirement (Specific Sectors)';
-  legalCitation: string;
-  websiteStatus: 'Implemented' | 'Awaiting Underwriter Scope Confirmation';
-  notes: string;
 }
 
 export interface QuoteFormData {

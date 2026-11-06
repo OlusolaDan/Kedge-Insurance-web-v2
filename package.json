@@ -1,15 +1,17 @@
 {
-  "name": "react-example",
+  "name": "kedge-insurance",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.mjs && vite build && node scripts/generate-prerender.mjs && node scripts/verify-image-assets.mjs",
     "start": "node server.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:seo": "node scripts/validate-sitemap.mjs && node scripts/verify-prerender.mjs",
+    "test:images": "node scripts/verify-image-assets.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

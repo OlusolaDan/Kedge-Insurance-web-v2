@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, CheckCircle2, Target, HeartHandshake, Award, Users, Scale, Sparkles, Building, Compass } from 'lucide-react';
 import { COMPANY_CONFIG } from '../data/companyConfig';
-import teamImagePath from '../assets/images/corporate_advisory_team_1792794886967.jpg';
+import teamImagePath from '../assets/images/Collaborative KEDGE Team Meeting.png';
 
 interface AboutPageProps {
   navigate: (path: string) => void;
@@ -49,21 +49,28 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
                 Dedicated to Protecting Nigerian Enterprise & Personal Solvency
               </h2>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                KEDGE Insurance Brokers Limited is an independent insurance broking firm established in the Federal Republic of Nigeria, committed to helping businesses and individuals protect their assets, manage risk, and safeguard their financial interests. We bridge the gap between clients seeking insurance protection and the insurance companies that underwrite risks, connecting our clients with insurance solutions suited to their needs and circumstances.
+                {COMPANY_CONFIG.legalName} is a wholly Nigerian-owned private limited liability company, incorporated in 2003 under the Companies and Allied Matters legislation, with Registration Number {COMPANY_CONFIG.regulatory.cacRegistrationNumber}.
               </p>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                We believe insurance should be more than an annual transaction; it should be a strategic component of sound risk management and long-term financial resilience. By understanding our clients’ operations, assets, liabilities, and unique exposures, we provide professional broking guidance to help them evaluate coverage options, clarify policy terms and conditions, and make informed decisions about protecting what matters most.
+                Since commencing operations as an insurance brokerage firm in 2009, we have built our reputation on professional excellence, technical expertise and a strong commitment to delivering effective insurance and risk management solutions. We leverage our extensive broking knowledge and industry capabilities to provide comprehensive risk assessment, analysis, insurance programme structuring and policy servicing, developing and managing a robust portfolio across diverse sectors of the economy.
               </p>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Our commitment extends beyond policy placement. We support clients through policy documentation, renewals, and the claims process, applying professional diligence, technical understanding, and clear communication at every stage. Whether you are building a business, protecting valuable assets, or securing your family's financial future, KEDGE is here to help you navigate risk with confidence and make informed decisions about your protection. Let us work with you to safeguard what you have built, prepare for the uncertainties ahead, and protect the future you are working towards.
-
-KEDGE Insurance Brokers Limited — With You From Now, Into The Future.
+                Our expertise extends to complex and specialised insurance risks, particularly in the Energy, Oil and Gas, and Engineering sectors, where we bring professional insight and technical understanding to the assessment, placement and management of challenging risk exposures.
+              </p>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Through strategic relationships with reputable international insurance companies, we continually strengthen our technical capabilities, broaden our market access and enhance our industry knowledge. These relationships support our commitment to professional development, service innovation and the delivery of quality insurance solutions that meet the evolving needs of our clients.
+              </p>
+               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                With our head office in Lagos and branches across Nigeria, Kedge Insurance Brokers Limited is strategically positioned to serve clients nationwide. We remain committed to providing dependable professional guidance, responsive client service and insurance solutions designed to protect assets, manage uncertainties and support sustainable business and personal financial security.
               </p>
 
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
                 <p className="font-semibold text-slate-900">Governance & Disclosure Status:</p>
                 <p>
                   Official corporate founding records, personnel rosters, and regulatory certificates are managed through designated compliance controls: <span className="text-amber-800">{COMPANY_CONFIG.regulatory.statusNote}</span>
+                </p>
+                <p className="font-mono text-[11px] text-slate-600">
+                  NAICOM licence: {COMPANY_CONFIG.regulatory.naicomLicenceNumber} · NCRIB membership: {COMPANY_CONFIG.regulatory.ncribMembershipNumber} · CAC: {COMPANY_CONFIG.regulatory.cacRegistrationNumber}
                 </p>
               </div>
             </div>
@@ -73,8 +80,12 @@ KEDGE Insurance Brokers Limited — With You From Now, Into The Future.
                 <img
                   src={teamImagePath}
                   alt="KEDGE technical advisory team meeting in executive corporate boardroom in Lagos"
+                  width={1200}
+                  height={896}
                   className="w-full h-80 sm:h-96 object-cover object-center"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="p-4 bg-slate-50 text-xs text-slate-500 border-t border-slate-200">
                   <span>Advisory & Placement Desk · Commercial Risk Analysis</span>
@@ -131,7 +142,7 @@ KEDGE Insurance Brokers Limited — With You From Now, Into The Future.
             </div>
 
             {/* Insurance Agent Box */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4 opacity-90">
+            <div className="premium-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4 opacity-90">
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-3 py-1 rounded">
                 <span>An Insurance Agent</span>
               </div>
@@ -237,7 +248,7 @@ KEDGE Insurance Brokers Limited — With You From Now, Into The Future.
 
           {/* Vision and Mission Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/80 space-y-3">
+            <div className="philosophy-card bg-slate-800/80 p-8 rounded-2xl border border-slate-700/80 space-y-3">
               <div className="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
                 <Target className="w-5 h-5" />
               </div>
@@ -247,7 +258,7 @@ KEDGE Insurance Brokers Limited — With You From Now, Into The Future.
               </p>
             </div>
 
-            <div className="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/80 space-y-3">
+            <div className="philosophy-card bg-slate-800/80 p-8 rounded-2xl border border-slate-700/80 space-y-3">
               <div className="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
                 <Compass className="w-5 h-5" />
               </div>
@@ -267,7 +278,7 @@ KEDGE Insurance Brokers Limited — With You From Now, Into The Future.
               {COMPANY_CONFIG.philosophy.coreValues.map((val, idx) => (
                 <div
                   key={val.name}
-                  className="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 flex flex-col justify-between"
+                  className="philosophy-card bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">

@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2026-11-06T01:41:58.096Z",
+  "liveOrigin": "https://www.kedgeinsure.com.ng",
+  "totalRoutesDiscovered": 22,
+  "routes": [
+    {
+      "slug": "homepage",
+      "path": "/",
+      "liveUrl": "https://www.kedgeinsure.com.ng/",
+      "pageName": "Home",
+      "category": "Corporate Homepage",
+      "desktopFilename": "desktop/homepage.png",
+      "mobileFilename": "mobile/homepage.png"
+    },
+    {
+      "slug": "about-us",
+      "path": "/about",
+      "liveUrl": "https://www.kedgeinsure.com.ng/about",
+      "pageName": "About Us",
+      "category": "Corporate Profile",
+      "desktopFilename": "desktop/about-us.png",
+      "mobileFilename": "mobile/about-us.png"
+    },
+    {
+      "slug": "services",
+      "path": "/services",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services",
+      "pageName": "Services Portfolio",
+      "category": "Services Overview",
+      "desktopFilename": "desktop/services.png",
+      "mobileFilename": "mobile/services.png"
+    },
+    {
+      "slug": "insurance-directory",
+      "path": "/insurance-directory",
+      "liveUrl": "https://www.kedgeinsure.com.ng/insurance-directory",
+      "pageName": "Insurance Directory",
+      "category": "Product Catalog",
+      "desktopFilename": "desktop/insurance-directory.png",
+      "mobileFilename": "mobile/insurance-directory.png"
+    },
+    {
+      "slug": "services-motor",
+      "path": "/services/motor",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services/motor",
+      "pageName": "Motor & Fleet Insurance",
+      "category": "Specialist Class",
+      "desktopFilename": "desktop/services-motor.png",
+      "mobileFilename": "mobile/services-motor.png"
+    },
+    {
+      "slug": "services-marine-aviation",
+      "path": "/services/marine-aviation",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services/marine-aviation",
+      "pageName": "Marine & Aviation Insurance",
+      "category": "Specialist Class",
+      "desktopFilename": "desktop/services-marine-aviation.png",
+      "mobileFilename": "mobile/services-marine-aviation.png"
+    },
+    {
+      "slug": "services-property-engineering",
+      "path": "/services/property-engineering",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services/property-engineering",
+      "pageName": "Property & Engineering",
+      "category": "Specialist Class",
+      "desktopFilename": "desktop/services-property-engineering.png",
+      "mobileFilename": "mobile/services-property-engineering.png"
+    },
+    {
+      "slug": "services-liability",
+      "path": "/services/liability",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services/liability",
+      "pageName": "Liability & Financial Lines",
+      "category": "Specialist Class",
+      "desktopFilename": "desktop/services-liability.png",
+      "mobileFilename": "mobile/services-liability.png"
+    },
+    {
+      "slug": "services-life-personal",
+      "path": "/services/life-personal",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services/life-personal",
+      "pageName": "Life, Health & Personal",
+      "category": "Specialist Class",
+      "desktopFilename": "desktop/services-life-personal.png",
+      "mobileFilename": "mobile/services-life-personal.png"
+    },
+    {
+      "slug": "services-commercial-specialist",
+      "path": "/services/commercial-specialist",
+      "liveUrl": "https://www.kedgeinsure.com.ng/services/commercial-specialist",
+      "pageName": "Commercial & Specialist",
+      "category": "Specialist Class",
+      "desktopFilename": "desktop/services-commercial-specialist.png",
+      "mobileFilename": "mobile/services-commercial-specialist.png"
+    },
+    {
+      "slug": "industries",
+      "path": "/industries",
+      "liveUrl": "https://www.kedgeinsure.com.ng/industries",
+      "pageName": "Industries & Sectors",
+      "category": "Industry Sectors",
+      "desktopFilename": "desktop/industries.png",
+      "mobileFilename": "mobile/industries.png"
+    },
+    {
+      "slug": "risk-management",
+      "path": "/risk-management",
+      "liveUrl": "https://www.kedgeinsure.com.ng/risk-management",
+      "pageName": "Risk Advisory",
+      "category": "Strategic Advisory",
+      "desktopFilename": "desktop/risk-management.png",
+      "mobileFilename": "mobile/risk-management.png"
+    },
+    {
+      "slug": "insights",
+      "path": "/insights",
+      "liveUrl": "https://www.kedgeinsure.com.ng/insights",
+      "pageName": "Insights & Knowledge",
+      "category": "Knowledge Base",
+      "desktopFilename": "desktop/insights.png",
+      "mobileFilename": "mobile/insights.png"
+    },
+    {
+      "slug": "contact",
+      "path": "/contact",
+      "liveUrl": "https://www.kedgeinsure.com.ng/contact",
+      "pageName": "Contact Us",
+      "category": "Direct Engagement",
+      "desktopFilename": "desktop/contact.png",
+      "mobileFilename": "mobile/contact.png"
+    },
+    {
+      "slug": "request-quote",
+      "path": "/quote",
+      "liveUrl": "https://www.kedgeinsure.com.ng/quote",
+      "pageName": "Request a Quote",
+      "category": "Client Conversion",
+      "desktopFilename": "desktop/request-quote.png",
+      "mobileFilename": "mobile/request-quote.png"
+    },
+    {
+      "slug": "claims-assistance",
+      "path": "/claims-assistance",
+      "liveUrl": "https://www.kedgeinsure.com.ng/claims-assistance",
+      "pageName": "Claims Assistance",
+      "category": "Client Operations",
+      "desktopFilename": "desktop/claims-assistance.png",
+      "mobileFilename": "mobile/claims-assistance.png"
+    },
+    {
+      "slug": "renewal-enquiry",
+      "path": "/renewal-enquiry",
+      "liveUrl": "https://www.kedgeinsure.com.ng/renewal-enquiry",
+      "pageName": "Renewal Review",
+      "category": "Client Operations",
+      "desktopFilename": "desktop/renewal-enquiry.png",
+      "mobileFilename": "mobile/renewal-enquiry.png"
+    },
+    {
+      "slug": "faq",
+      "path": "/faq",
+      "liveUrl": "https://www.kedgeinsure.com.ng/faq",
+      "pageName": "Frequently Asked Questions",
+      "category": "Client Advisory",
+      "desktopFilename": "desktop/faq.png",
+      "mobileFilename": "mobile/faq.png"
+    },
+    {
+      "slug": "privacy-policy",
+      "path": "/privacy-policy",
+      "liveUrl": "https://www.kedgeinsure.com.ng/privacy-policy",
+      "pageName": "Privacy Policy",
+      "category": "Compliance & Legal",
+      "desktopFilename": "desktop/privacy-policy.png",
+      "mobileFilename": "mobile/privacy-policy.png"
+    },
+    {
+      "slug": "terms",
+      "path": "/terms",
+      "liveUrl": "https://www.kedgeinsure.com.ng/terms",
+      "pageName": "Terms of Business",
+      "category": "Compliance & Legal",
+      "desktopFilename": "desktop/terms.png",
+      "mobileFilename": "mobile/terms.png"
+    },
+    {
+      "slug": "coverage-matrix",
+      "path": "/coverage-matrix",
+      "liveUrl": "https://www.kedgeinsure.com.ng/coverage-matrix",
+      "pageName": "Coverage Matrix",
+      "category": "Interactive Diagnostic",
+      "desktopFilename": "desktop/coverage-matrix.png",
+      "mobileFilename": "mobile/coverage-matrix.png"
+    },
+    {
+      "slug": "404",
+      "path": "/404.html",
+      "liveUrl": "https://www.kedgeinsure.com.ng/404.html",
+      "pageName": "404 Error Document",
+      "category": "System Fallback",
+      "desktopFilename": "desktop/404.png",
+      "mobileFilename": "mobile/404.png"
+    }
+  ]
+}

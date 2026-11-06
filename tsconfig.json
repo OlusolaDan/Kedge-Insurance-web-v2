@@ -21,7 +21,8 @@
       ]
     },
     "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "noEmit": true
   },
-  "exclude": ["dist"]
+  "exclude": ["aistudio/copy/dist"]
 }

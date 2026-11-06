@@ -125,8 +125,8 @@ export const INDUSTRY_SECTORS: IndustrySector[] = [
   {
     id: 'oil-gas-energy-sector',
     title: 'Oil, Gas & Energy',
-    subtitle: 'NOGICD Act compliant risk management for upstream and downstream operations',
-    description: 'The energy sector represents the bedrock of Nigeria’s export revenues, characterized by multi-million-dollar asset values and severe environmental exposures. In compliance with the NOGICD Act 2010, KEDGE structures consortium-based local risk placements.',
+    subtitle: 'Insurance and risk considerations for upstream and downstream operations',
+    description: 'The energy sector involves substantial property, operational and environmental exposures. Sections 49–50 of the NOGICD Act 2010 address insurance of oil-and-gas risks and offshore placement approval. KEDGE is an insurance broker; insurers assess and underwrite the risks they accept.',
     typicalExposures: [
       'Well blowouts, reservoir damage, and control of well expenses',
       'Pipeline vandalism, accidental rupture, and environmental spill contamination',
@@ -140,7 +140,7 @@ export const INDUSTRY_SECTORS: IndustrySector[] = [
       'Energy Business Interruption',
       'Offshore Energy Liabilities & Pollution Clean-up',
     ],
-    nigerianCommercialContext: 'Operating within the Niger Delta basin, offshore deepwater blocks, Escravos, and downstream fuel retail grids, requiring rigorous adherence to NAICOM Energy Guidelines and NCDMB approvals.',
+    nigerianCommercialContext: 'The NOGICD Act 2010 and the NCDMB–NAICOM Insurance Services Guideline are relevant to insurable oil-and-gas risks. Offshore placement requires prior written NAICOM approval after local capacity has been exhausted.',
   },
   {
     id: 'agriculture-agribusiness',

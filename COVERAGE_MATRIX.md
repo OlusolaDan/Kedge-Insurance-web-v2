@@ -1,50 +1,64 @@
-# KEDGE Insurance Brokers Ltd — Internal Insurance Coverage Matrix & NAICOM Alignment
+# NAICOM Coverage Matrix — Source and Verification Record
 
-This document records the official statutory classification, legal citations, implementation status, and verification requirements for all insurance classes arranged by KEDGE Insurance Brokers Ltd in Nigeria.
+**Last legal-source review:** 31 October 2026
+**Primary source:** [Nigerian Insurance Industry Reform Act 2025](https://naicom.gov.ng/wp-content/uploads/2025/08/NIIRA-2025.pdf)
+**Regulatory index:** [NAICOM Regulatory Instruments](https://naicom.gov.ng/regulatory-instruments/)
 
----
+This record supports the public Coverage Matrix. It is not a NAICOM publication, legal opinion, or statement of KEDGE’s regulatory standing.
 
-## Statutory Legal References & Authority Codes
+## Initial audit
 
-1. **Insurance Act 2003 (Act No. 1 of 2003)**
-   - **Section 64:** Insurance of Buildings Under Construction exceeding two floors.
-   - **Section 65:** Insurance of Public Buildings against collapse, fire, earthquake, storm, and flood.
-   - **Section 67:** Mandatory local insurance of all goods imported into the Federal Republic of Nigeria.
-   - **Section 68:** Statutory Motor Vehicle (Third-Party) Insurance.
-   - **Section 50(1):** "No Premium, No Cover" statutory principle.
-2. **Pension Reform Act 2014 (PRA 2014)**
-   - **Section 4(5):** Mandatory Group Life Assurance (minimum 3x annual total emoluments for employers with 3+ staff).
-3. **Nigerian Oil and Gas Industry Content Development (NOGICD) Act 2010**
-   - **Sections 49 & 50:** Mandatory placement of 100% insurable oil & gas risks with local Nigerian brokers and insurers.
-4. **Civil Aviation Act 2006**
-   - Mandatory third-party and passenger legal liability for commercial aircraft operators.
-5. **National Health Insurance Authority (NHIA) Act 2022**
-   - Professional indemnity standards for licensed healthcare facilities and medical HMOs.
-6. **Federal Competition and Consumer Protection Act 2018 (FCCPA)**
-   - Strict product liability and consumer safety standards for manufacturers, packers, and distributors.
-7. **Nigeria Data Protection Act (NDPA) 2023**
-   - Statutory data privacy and confidentiality duties applicable to commercial enterprises.
+The previous data mixed insurance business classes with retail products, treated whole classes as compulsory, cited the repealed Insurance Act 2003 without checking the replacement legislation, and included implementation claims and internal notes in the public page. Its status labels and several legal citations were not reliable evidence of current obligations. The old single-array dataset has been removed.
 
----
+## Classification verified in NIIRA 2025
 
-## Detailed Coverage Matrix
+Section 3(1) establishes two principal categories: life insurance business and non-life insurance business.
 
-| NAICOM Regulatory Class | Commercial Product Lines | Statutory Status | Statutory Citation | Implementation Status | Outstanding Verification Items |
-|---|---|---|---|---|---|
-| **Motor Vehicle Insurance** | Motor Third-Party, Motor Comprehensive, Commercial Fleet, Courier & Dispatch Cover | **Compulsory in Nigeria** | Section 68, Insurance Act 2003; NAICOM 2023 Revised Motor Rates | **Implemented** | Integration with live NIID automated API lookup portal. |
-| **Marine & Aviation Insurance** | Marine Cargo (Institute Cargo Clauses A, B, C), Marine Hull & Machinery (H&M), P&I Advisory | **Compulsory in Nigeria** (Imports) | Section 67, Insurance Act 2003; CBN Form M Trade Guidelines | **Implemented** | Real-time electronic Marine Certificate upload to Nigeria Single Window Trade Portal. |
-| **Fire & Property Insurance** | Fire & Special Perils, Insurance of Public Buildings, Industrial All Risks (IAR), Business Interruption | **Compulsory in Nigeria** (Public Buildings) | Section 65, Insurance Act 2003 | **Implemented** | Clarification on state-level fire safety inspection certificates (e.g. Lagos State Safety Commission). |
-| **Engineering Insurance** | Insurance of Buildings Under Construction, Contractors’ All Risks (CAR), Erection All Risks (EAR), Machinery Breakdown, Electronic Equipment (EEI) | **Compulsory in Nigeria** (>2 Floors) | Section 64, Insurance Act 2003; National Building Code | **Implemented** | Soil-test report verification requirements and building collapse risk survey templates. |
-| **Liability Insurance** | Public Liability / Occupiers’ Liability, Professional Indemnity (PI), Directors’ & Officers’ Liability (D&O), Product Liability | **Compulsory in Nigeria** (Specific professions / occupiers) | Section 45 & 65 Insurance Act 2003; CAMA 2020; FCCPA 2018 | **Implemented** | Retroactive claims-made dates and run-off coverage clauses for retiring partners. |
-| **Life Insurance Business** | Statutory Group Life Assurance (GLA), Group Personal Accident (GPA), Keyman / Executive Continuity Life | **Compulsory in Nigeria** (Employers with 3+ staff) | Section 4(5), Pension Reform Act 2014; PENCOM Guidelines | **Implemented** | Automated payroll schedule upload and Free Cover Limit (FCL) optimization with life consortia. |
-| **Special Risks / Energy** | Upstream E&P Package, Operators’ Extra Expense (OEE), Downstream Depots & Pipeline All Risks | **Regulatory Mandate** | Sections 49 & 50, NOGICD Act 2010; NAICOM Energy Guidelines | **Implemented** | Consortium retention capacity thresholds and NCDMB annual compliance filing. |
-| **Pecuniary & Commercial Crime** | Goods-in-Transit (GIT), Fidelity Guarantee, Money Insurance, Burglary & All Risks | **Optional / Market Standard** | Nigerian Commercial & Tort Law; Underwriter Market Standards | **Implemented** | Armed transit escort and safe specification warranty benchmarks. |
-| **Agricultural Insurance** | Multi-Peril Crop Insurance, Commercial Livestock & Poultry Mortality, Aquaculture Cover | **Optional / Market Standard** | NAIC Act Cap N89 LFN 2004; NAICOM Agro Guidelines | **Implemented** | Verification of designated agricultural loss adjusters and climatic index parameters. |
+- **Life — section 3(2):** individual life assurance, group life assurance, annuity, and health insurance business.
+- **Non-life — section 3(3):** fire; general accident; motor vehicle; marine and aviation; energy (oil, gas and power); engineering; bonds, credit guarantee and suretyship; and agricultural insurance business.
+- **Agricultural qualification — section 3(3)(h):** the Act excludes classes covered by the Nigerian Agricultural Insurance Corporation Act (Cap. N89, LFN 2004). The separate Act has not been independently reviewed for this page.
+- **Miscellaneous — section 3(4):** an additional classification including financial inclusion insurance business; it is not a third principal category equivalent to life and non-life.
+- **Additional classifications — sections 3(5) and 3(8):** the Commission may publish additional classes in the Federal Gazette and may classify insurance business by rules, regulations or guidelines.
 
----
+Products are illustrative examples, not statutory classes. A product’s actual classification depends on its substance and policy wording. A product is labelled as listed in KEDGE’s directory only where its identifier matches the existing directory.
 
-## Outstanding Verification & Governance Checkpoints
+## Compulsory provisions verified in NIIRA 2025
 
-1. **Board Confirmation of Registered Office:** Physical address details for Victoria Island commercial hub pending formal tenancy and secretarial registration.
-2. **NAICOM Operating Licence Filing:** Licence certificate designation awaiting final regulatory documentation.
-3. **NCRIB Secretarial Registration:** NCRIB membership identification pending updated council directory publication.
+| Provision | Scope recorded in the page |
+| --- | --- |
+| Section 43(1) | Professional indemnity cover for insurance and reinsurance broking firms. |
+| Section 68(1), (7), (9) | Group life assurance for every employer’s employees; three times annual total emolument. |
+| Section 75(1)–(3) | Liability insurance for construction of a building of more than one floor. |
+| Section 76(1), (2), (6) | Insurance of a building within the statutory definition of a public building. |
+| Section 77(1)–(2) | Insurance of Federal Government and agency assets and employees. |
+| Section 78(2)–(3) | Third-party insurance for vehicles transporting petroleum and gas products. |
+| Section 80(1)–(3) | Professional indemnity insurance for healthcare providers. |
+| Section 81(3)–(5) | Insurance for specified aviation operators and service providers. |
+| Section 82(1)–(4) | Insurance relating to goods and merchandise imported into Nigeria. |
+| Section 84(1)–(2) | Third-party motor insurance when a vehicle is used in a public place. |
+
+These are activity- or party-specific statutory duties. The matrix does not infer a general compulsory status for a whole insurance class, comprehensive motor cover, or an unverified product. Motor exceptions and policy/certificate requirements are cross-referenced to sections 86–89.
+
+## Other verified sector-specific insurance requirements
+
+- **NOGICD Act 2010, sections 49–50:** NCDMB states that operators engaged in oil-and-gas activities must insure insurable risks related to their business through an insurance company and a broker registered in Nigeria. Offshore placement requires prior written NAICOM approval after local insurance capacity is exhausted. The requirement is specific to the covered operators and oil-and-gas risks. [NCDMB–NAICOM Insurance Services Guideline announcement](https://www.ncdmb.gov.ng/ncdmb-naicom-launch-insurance-services-guideline/)
+- **Civil Aviation Act 2022, section 104(1)–(3):** carriers and specified aviation service providers must maintain adequate insurance for liabilities under the Act and third-party damage; section 104 also addresses operating permission and quarterly compliance returns. Read with NIIRA 2025, section 81(3)–(5). This does not make aircraft hull or spares cover universally compulsory. [Official NCAA Act PDF](https://www.ncaa.gov.ng/media/sxxn42yu/civil-aviation-act-2022-publi9cation.pdf#page=69)
+- **NCDMB–NAICOM Insurance Services Guideline (2022):** the official NCDMB announcement verifies the guideline’s launch and purpose, but its full text and detailed current requirements have not been independently reviewed.
+
+## Insurance broker provisions verified in NIIRA 2025
+
+- **Section 39:** licence required to transact business as an insurance broker; application and qualification provisions; renewal every five years or for a longer period determined by the Commission.
+- **Section 39(11)–(12):** fundamental risk-assessment information must be provided to underwriters in accordance with Commission regulations; the Act addresses commission where the omission is knowing or reckless.
+- **Section 42(1)(g), (2)–(5):** conduct contrary to the profession’s code is among the grounds relevant to cancellation, subject to the statutory notice and sanction process.
+- **Section 43:** professional indemnity cover for insurance and reinsurance broking firms.
+- **Section 44:** prescribed records, evidence of current Nigerian Council of Registered Insurance Brokers membership, and audited financial statements and revenue account.
+- **Section 47:** a broker’s clients’ account for money, premiums, claims and recoveries received from or on behalf of clients, insurers and reinsurers.
+
+These provisions describe the legal framework and do not verify KEDGE’s licence, membership, or compliance. Insurers underwrite policies and assume the insured risks; brokers act as intermediaries.
+No separate client-facing disclosure obligation is asserted without an individually verified regulatory instrument.
+
+## Outstanding verification
+
+- Individual NAICOM guidelines, directives and circulars have not been independently identified and checked for currency or applicability. The public page links to NAICOM’s official index without representing a specific instrument as verified.
+- The Nigerian Agricultural Insurance Corporation Act is cited as a qualification by NIIRA section 3(3)(h); its separate text was not independently reviewed.
+- Product wording and the circumstances of a particular risk may change product classification or the application of a compulsory requirement.

@@ -1,405 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, CheckCircle2, ShieldCheck, AlertCircle, Copy, Check, FileCheck, PhoneCall, HelpCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, AlertCircle } from 'lucide-react';
 import { INSURANCE_SERVICES } from '../data/servicesData';
-import { COMPANY_CONFIG } from '../data/companyConfig';
 
-interface QuotePageProps {
-  navigate: (path: string) => void;
-  preselectedService?: string | null;
-}
+interface QuotePageProps { navigate: (path: string) => void; preselectedService?: string | null; }
+type QuoteResponse = { success: boolean; reference?: string; message?: string; errors?: Record<string, string>; details?: { category?: string; clientName?: string } };
+const categories = ['Motor', 'Marine & Aviation', 'Property & Engineering', 'Liability', 'Life & Personal', 'Commercial & Specialist', 'Other / Not sure'];
 
 export const QuotePage: React.FC<QuotePageProps> = ({ navigate, preselectedService }) => {
+  const [step, setStep] = useState(1);
+  const [clientType, setClientType] = useState<'Individual' | 'Business'>('Individual');
   const [fullName, setFullName] = useState('');
   const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [category, setCategory] = useState('Motor');
+  const [category, setCategory] = useState('');
   const [specificProduct, setSpecificProduct] = useState('');
+  const [assetDetails, setAssetDetails] = useState('');
   const [estimatedSumInsured, setEstimatedSumInsured] = useState('');
+  const [startDate, setStartDate] = useState('');
   const [description, setDescription] = useState('');
   const [privacyConsent, setPrivacyConsent] = useState(false);
-
-  // States
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [serverError, setServerError] = useState<string | null>(null);
-  const [submissionSuccess, setSubmissionSuccess] = useState<any | null>(null);
+  const [serverError, setServerError] = useState('');
+  const [success, setSuccess] = useState<QuoteResponse | null>(null);
   const [copied, setCopied] = useState(false);
+  const products = INSURANCE_SERVICES.filter((service) => service.category === category);
 
-  // Populate preselected service if provided
   useEffect(() => {
-    if (preselectedService) {
-      const match = INSURANCE_SERVICES.find(
-        (s) => s.name.toLowerCase() === preselectedService.toLowerCase() || s.id === preselectedService
-      );
-      if (match) {
-        setCategory(match.category);
-        setSpecificProduct(match.name);
-      } else {
-        setDescription(`Inquiry regarding: ${preselectedService}`);
-      }
-    }
+    if (!preselectedService) return;
+    const match = INSURANCE_SERVICES.find((service) => service.name.toLowerCase() === preselectedService.toLowerCase() || service.id === preselectedService);
+    if (match) { setCategory(match.category); setSpecificProduct(match.name); }
+    else { setCategory('Other / Not sure'); setDescription(`Enquiry regarding: ${preselectedService}`); }
   }, [preselectedService]);
 
-  // Available products for current category
-  const productsForCategory = INSURANCE_SERVICES.filter((s) => s.category === category);
+  const checkDetails = () => {
+    const next: Record<string, string> = {};
+    if (fullName.trim().length < 2) next.fullName = 'Enter your name (at least 2 characters).';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next.email = 'Enter a valid email address.';
+    if (phone.replace(/\D/g, '').length < 8) next.phone = 'Enter a valid telephone number.';
+    if (description.trim().length < 10) next.description = 'Describe your requirement in at least 10 characters.';
+    if (!privacyConsent) next.privacyConsent = 'Consent to the privacy notice is required.';
+    setErrors(next);
+    return Object.keys(next).length === 0;
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({});
-    setServerError(null);
-
-    // Client-side quick check
-    const newErrors: Record<string, string> = {};
-    if (!fullName.trim() || fullName.trim().length < 2) {
-      newErrors.fullName = 'Full Name is required (minimum 2 characters)';
-    }
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = 'A valid email address is required';
-    }
-    if (!phone.trim() || phone.replace(/\D/g, '').length < 8) {
-      newErrors.phone = 'A valid contact telephone number is required';
-    }
-    if (!description.trim() || description.trim().length < 10) {
-      newErrors.description = 'Please describe your insurance requirement (minimum 10 characters)';
-    }
-    if (!privacyConsent) {
-      newErrors.privacyConsent = 'You must accept the privacy notice to submit';
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    setLoading(true);
-
+  const submit = async () => {
+    if (!checkDetails()) { setStep(2); return; }
+    setLoading(true); setServerError('');
     try {
-      const payload = {
-        type: 'quote',
-        fullName,
-        organization,
-        email,
-        phone,
-        category,
-        specificProduct: specificProduct || productsForCategory[0]?.name || category,
-        estimatedSumInsured,
-        description,
-        privacyConsent,
-      };
-
-      const response = await fetch('/api/submit.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+      const response = await fetch(import.meta.env.DEV ? '/api/quote' : '/api/submit.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'quote', clientType, fullName: fullName.trim(), organization: organization.trim(), email: email.trim(), phone: phone.trim(), category, specificProduct, assetDetails: assetDetails.trim(), estimatedSumInsured: estimatedSumInsured.trim(), startDate, description: description.trim(), privacyConsent }),
       });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        if (data.errors) {
-          setErrors(data.errors);
-        }
-        setServerError(data.message || 'Server rejected the submission. Please check your details.');
-      } else {
-        setSubmissionSuccess(data);
-        window.scrollTo({ top: 100, behavior: 'smooth' });
-      }
-    } catch (err: any) {
-      setServerError('Network communication error with KEDGE server. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+      const data = await response.json() as QuoteResponse;
+      if (!response.ok || !data.success) { setErrors(data.errors ?? {}); if (data.errors && Object.keys(data.errors).length) setStep(2); setServerError(data.message || 'We could not submit your enquiry. Please try again.'); return; }
+      setSuccess(data);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      setServerError('We could not connect to the enquiry service. Please try again or contact KEDGE using the details on the Contact page.');
+    } finally { setLoading(false); }
   };
 
-  const copyReference = () => {
-    if (submissionSuccess?.reference) {
-      navigator.clipboard.writeText(submissionSuccess.reference);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault(); setServerError('');
+    if (step === 1) {
+      if (!category) { setErrors({ category: 'Choose a category or select “Other / Not sure”.' }); return; }
+      setErrors({}); setStep(2); return;
     }
+    if (step === 2) { if (checkDetails()) setStep(3); return; }
+    void submit();
   };
+  const copyReference = async () => { if (!success?.reference) return; await navigator.clipboard.writeText(success.reference); setCopied(true); window.setTimeout(() => setCopied(false), 2000); };
+  const inputClass = 'mt-1 w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 focus:border-[#0a192f] focus:outline-none focus:ring-2 focus:ring-[#0a192f]';
 
-  return (
-    <div className="bg-slate-50 min-h-screen py-12 lg:py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="text-xs font-semibold text-[#c51f1f] tracking-wider uppercase mb-1">
-            Technical Quote Desk
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#0a192f] font-display">
-            Request an Insurance Quotation
-          </h1>
-          <p className="text-sm text-slate-600 mt-2">
-            Provide details of your insurable interest. As insurance brokers, KEDGE surveys the market to negotiate optimal coverage terms across NAICOM-registered insurers.
-          </p>
-        </div>
-
-        {submissionSuccess ? (
-          /* Success Screen with Verified Reference Code */
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-sm space-y-6 text-center animate-in fade-in duration-200">
-            <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
-              <CheckCircle2 className="w-8 h-8" />
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-slate-900 font-display">
-                Quotation Request Logged Successfully
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto">
-                {submissionSuccess.message}
-              </p>
-            </div>
-
-            <div className="max-w-md mx-auto p-4 rounded-xl bg-slate-50 border border-slate-200 text-left space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-500 font-medium">Tracking Reference:</span>
-                <button
-                  onClick={copyReference}
-                  className="text-xs text-[#0a192f] hover:text-[#c51f1f] inline-flex items-center gap-1 font-semibold"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? 'Copied' : 'Copy'}</span>
-                </button>
-              </div>
-              <p className="text-lg font-mono font-bold text-[#0a192f] tracking-wide">
-                {submissionSuccess.reference}
-              </p>
-              <div className="text-xs text-slate-500 pt-2 border-t border-slate-200 space-y-1">
-                <p>Category: <strong className="text-slate-800">{submissionSuccess.details?.category}</strong></p>
-                <p>Client: <strong className="text-slate-800">{submissionSuccess.details?.clientName}</strong></p>
-                <p>Expected Review: <strong className="text-emerald-700">{submissionSuccess.estimatedResponseTime}</strong></p>
-              </div>
-            </div>
-
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <button
-                onClick={() => {
-                  setSubmissionSuccess(null);
-                  setDescription('');
-                  setEstimatedSumInsured('');
-                }}
-                className="px-5 py-2.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg"
-              >
-                Submit Another Request
-              </button>
-              <button
-                onClick={() => navigate('/services')}
-                className="px-5 py-2.5 text-xs font-semibold text-white bg-[#0a192f] hover:bg-slate-800 rounded-lg"
-              >
-                Browse Insurance Directory
-              </button>
-            </div>
-          </div>
-        ) : (
-          /* Quote Request Form */
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm">
-            {serverError && (
-              <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2.5">
-                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold">Submission Error</p>
-                  <p>{serverError}</p>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal / Org Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="e.g. Babatunde Adeleke"
-                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
-                      errors.fullName ? 'border-red-500' : 'border-slate-300'
-                    }`}
-                  />
-                  {errors.fullName && (
-                    <p className="text-[11px] text-red-600 mt-1">{errors.fullName}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Company / Organisation Name <span className="text-slate-400 font-normal">(Optional for private)</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={organization}
-                    onChange={(e) => setOrganization(e.target.value)}
-                    placeholder="e.g. Apex Logistics Nigeria Ltd"
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f]"
-                  />
-                </div>
-              </div>
-
-              {/* Contact Information */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Email Address <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="babatunde@example.com"
-                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
-                      errors.email ? 'border-red-500' : 'border-slate-300'
-                    }`}
-                  />
-                  {errors.email && (
-                    <p className="text-[11px] text-red-600 mt-1">{errors.email}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Telephone Number <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="e.g. 0803 123 4567 or +234..."
-                    className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
-                      errors.phone ? 'border-red-500' : 'border-slate-300'
-                    }`}
-                  />
-                  {errors.phone && (
-                    <p className="text-[11px] text-red-600 mt-1">{errors.phone}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Category & Product Select */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Insurance Category <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    value={category}
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                      setSpecificProduct('');
-                    }}
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f]"
-                  >
-                    <option value="Motor">Motor Insurance</option>
-                    <option value="Marine & Aviation">Marine & Aviation Insurance</option>
-                    <option value="Property & Engineering">Property & Engineering Insurance</option>
-                    <option value="Liability">Liability Insurance</option>
-                    <option value="Life & Personal">Life & Personal Insurance</option>
-                    <option value="Commercial & Specialist">Commercial & Specialist Insurance</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Specific Insurance Class / Product
-                  </label>
-                  <select
-                    value={specificProduct}
-                    onChange={(e) => setSpecificProduct(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f]"
-                  >
-                    <option value="">-- Select Specific Product (or describe below) --</option>
-                    {productsForCategory.map((prod) => (
-                      <option key={prod.id} value={prod.name}>
-                        {prod.name} {prod.isCompulsoryInNigeria ? '(Statutory Compulsory)' : ''}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Sum Insured */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                  Estimated Total Sum Insured / Asset Value (Naira or USD)
-                </label>
-                <input
-                  type="text"
-                  value={estimatedSumInsured}
-                  onChange={(e) => setEstimatedSumInsured(e.target.value)}
-                  placeholder="e.g. ₦45,000,000 (Vehicles) or $500,000 (Marine Cargo)"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f]"
-                />
-                <p className="text-[11px] text-slate-500 mt-1">
-                  Accurate valuation helps prevent under-insurance penalties under the Average Clause.
-                </p>
-              </div>
-
-              {/* Requirement Description */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                  Description of Insurance Requirement & Operating Context <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  rows={4}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Please describe the risk, vehicle models/fleet count, building location, nature of cargo, or current insurance expiry date..."
-                  className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
-                    errors.description ? 'border-red-500' : 'border-slate-300'
-                  }`}
-                />
-                {errors.description && (
-                  <p className="text-[11px] text-red-600 mt-1">{errors.description}</p>
-                )}
-              </div>
-
-              {/* Privacy Consent Checkbox */}
-              <div className="pt-2">
-                <label className="flex items-start gap-2.5 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={privacyConsent}
-                    onChange={(e) => setPrivacyConsent(e.target.checked)}
-                    className="w-4 h-4 text-red-600 rounded border-slate-300 focus:ring-red-500 mt-0.5"
-                  />
-                  <span className="text-xs text-slate-600 leading-relaxed">
-                    I consent to KEDGE Insurance Brokers Ltd collecting and processing this information in accordance with our{' '}
-                    <button
-                      type="button"
-                      onClick={() => navigate('/privacy-policy')}
-                      className="text-[#0a192f] font-semibold underline"
-                    >
-                      Privacy Policy (Nigeria Data Protection Act 2023)
-                    </button>{' '}
-                    to review our risk profile and generate underwriting terms.
-                  </span>
-                </label>
-                {errors.privacyConsent && (
-                  <p className="text-[11px] text-red-600 mt-1 ml-6.5">{errors.privacyConsent}</p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs text-slate-500 hidden sm:inline">
-                  Strictly confidential · Zero broker fee to client
-                </span>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full sm:w-auto px-8 py-3 text-sm font-semibold text-white bg-[#c51f1f] hover:bg-[#a81717] rounded-lg shadow-sm transition-all disabled:opacity-50 active:scale-[0.98]"
-                >
-                  {loading ? 'Processing on KEDGE Server...' : 'Submit Quotation Request'}
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  return <div className="min-h-screen bg-slate-50 py-10 sm:py-14"><div className="mx-auto max-w-3xl px-4 sm:px-6">
+    <header className="mb-8 text-center"><p className="text-xs font-semibold uppercase tracking-wider text-[#c51f1f]">Quotation enquiry</p><h1 className="mt-2 text-3xl font-bold text-[#0a192f] sm:text-4xl">Request a conversation with an adviser</h1><p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">Tell us what you need to protect. A KEDGE adviser will review your enquiry and follow up. This form requests an expert callback; it does not calculate or bind insurance cover.</p></header>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+      {success ? <section className="space-y-5 text-center" role="status" aria-live="polite"><CheckCircle2 className="mx-auto h-12 w-12 text-emerald-600"/><h2 className="text-2xl font-bold text-[#0a192f]">Enquiry accepted</h2><p className="text-sm text-slate-600">{import.meta.env.DEV ? 'The local development service accepted this test enquiry. It was not sent to KEDGE.' : 'The configured enquiry service accepted your submission for processing.'} This confirms endpoint acceptance, not delivery to an inbox. An adviser can review the enquiry and follow up using the contact details provided.</p>{success.reference && <div className="mx-auto max-w-sm rounded-xl border border-slate-200 bg-slate-50 p-4 text-left"><div className="flex items-center justify-between text-xs text-slate-600"><span>Reference</span><button type="button" onClick={() => void copyReference()} className="inline-flex items-center gap-1 font-semibold text-[#0a192f] focus-visible:outline focus-visible:outline-2"><span>{copied ? 'Copied' : 'Copy'}</span>{copied ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}</button></div><p className="mt-1 font-mono text-lg font-bold text-[#0a192f]">{success.reference}</p></div>}<button type="button" onClick={() => navigate('/services')} className="min-h-11 rounded-lg bg-[#0a192f] px-5 py-3 text-sm font-semibold text-white">Browse insurance services</button></section> : <>
+        <div className="mb-7" aria-label={`Step ${step} of 3`}><div className="flex justify-between text-xs font-semibold text-slate-600"><span>Step {step} of 3</span><span>{['Your cover', 'Your details', 'Review'][step - 1]}</span></div><div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-[#c51f1f] transition-all" style={{ width: `${step * 33.333}%` }}/></div></div>
+        {serverError && <div className="mb-5 flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800" role="alert"><AlertCircle className="h-5 w-5 shrink-0"/>{serverError}</div>}
+        <form onSubmit={onSubmit} noValidate>
+          {step === 1 && <section aria-labelledby="quote-step-one"><h2 id="quote-step-one" className="text-xl font-bold text-[#0a192f]">What would you like to protect?</h2><div className="mt-5"><label htmlFor="category" className="text-sm font-semibold text-slate-700">Insurance category <span className="text-red-700">*</span></label><select id="category" value={category} onChange={(event) => { setCategory(event.target.value); setSpecificProduct(''); setErrors({}); }} className={inputClass}><option value="">Select a category</option>{categories.map((value) => <option key={value} value={value}>{value}</option>)}</select>{errors.category && <p className="mt-1 text-sm text-red-700" role="alert">{errors.category}</p>}</div>{products.length > 0 && <div className="mt-5"><label htmlFor="product" className="text-sm font-semibold text-slate-700">Specific product (optional)</label><select id="product" value={specificProduct} onChange={(event) => setSpecificProduct(event.target.value)} className={inputClass}><option value="">I’m not sure / I’d like advice</option>{products.map((product) => <option key={product.id} value={product.name}>{product.name}</option>)}</select></div>}</section>}
+          {step === 2 && <section aria-labelledby="quote-step-two"><h2 id="quote-step-two" className="text-xl font-bold text-[#0a192f]">Your contact and risk details</h2><fieldset className="mt-5"><legend className="text-sm font-semibold text-slate-700">I’m enquiring as</legend><div className="mt-2 flex gap-3">{(['Individual', 'Business'] as const).map((value) => <button key={value} type="button" aria-pressed={clientType === value} onClick={() => setClientType(value)} className={`min-h-11 rounded-lg border px-4 text-sm font-semibold ${clientType === value ? 'border-[#0a192f] bg-[#0a192f] text-white' : 'border-slate-300 text-slate-700'}`}>{value}</button>)}</div></fieldset><div className="mt-5 grid gap-4 sm:grid-cols-2"><Field id="fullName" label={clientType === 'Business' ? 'Contact person' : 'Full name'} value={fullName} onChange={setFullName} error={errors.fullName} required/><Field id="organization" label="Business or organisation (optional)" value={organization} onChange={setOrganization}/><Field id="email" label="Email address" type="email" value={email} onChange={setEmail} error={errors.email} required/><Field id="phone" label="Telephone number" type="tel" value={phone} onChange={setPhone} error={errors.phone} required/></div>{category === 'Motor' && <Field id="assetDetails" label="Vehicle details (optional)" value={assetDetails} onChange={setAssetDetails} placeholder="Vehicle make/model, year or fleet size"/>}{category === 'Property & Engineering' && <Field id="assetDetails" label="Property or project details (optional)" value={assetDetails} onChange={setAssetDetails} placeholder="Property type, location or project"/>}{category === 'Marine & Aviation' && <Field id="assetDetails" label="Cargo or aviation details (optional)" value={assetDetails} onChange={setAssetDetails} placeholder="Goods, route or asset details"/>}<div className="mt-4 grid gap-4 sm:grid-cols-2"><Field id="sumInsured" label="Estimated asset value (optional)" value={estimatedSumInsured} onChange={setEstimatedSumInsured} placeholder="Approximate value, if known"/><Field id="startDate" label="Preferred cover start date (optional)" type="date" value={startDate} onChange={setStartDate}/></div><div className="mt-4"><label htmlFor="description" className="text-sm font-semibold text-slate-700">Tell us about your requirement <span className="text-red-700">*</span></label><textarea id="description" rows={4} value={description} onChange={(event) => setDescription(event.target.value)} className={inputClass} placeholder="Share relevant risk details or questions. Please do not include identity documents or payment details." aria-invalid={Boolean(errors.description)} aria-describedby={errors.description ? 'description-error' : undefined}/>{errors.description && <p id="description-error" className="mt-1 text-sm text-red-700" role="alert">{errors.description}</p>}</div><div className="mt-5"><label className="flex items-start gap-3 text-sm leading-relaxed text-slate-600"><input type="checkbox" checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} className="mt-1 h-4 w-4 accent-[#c51f1f]" aria-invalid={Boolean(errors.privacyConsent)}/><span>I agree that KEDGE may use these details to respond to my enquiry, as described in the <button type="button" onClick={() => navigate('/privacy-policy')} className="font-semibold text-[#0a192f] underline">Privacy Policy</button>.</span></label>{errors.privacyConsent && <p className="mt-1 text-sm text-red-700" role="alert">{errors.privacyConsent}</p>}</div></section>}
+          {step === 3 && <section aria-labelledby="quote-step-three"><h2 id="quote-step-three" className="text-xl font-bold text-[#0a192f]">Review your enquiry</h2><dl className="mt-5 divide-y divide-slate-200 rounded-xl border border-slate-200 px-4">{[['Enquiry type', clientType], ['Category', category], ['Product', specificProduct || 'Advice requested'], ['Name', fullName], ['Business', organization || 'Not provided'], ['Email', email], ['Telephone', phone], ['Risk details', [assetDetails, description].filter(Boolean).join(' — ')], ['Estimated value', estimatedSumInsured || 'Not provided'], ['Preferred start date', startDate || 'Not provided']].map(([label, value]) => <div key={label} className="grid gap-1 py-3 sm:grid-cols-[10rem_1fr]"><dt className="text-sm font-semibold text-slate-600">{label}</dt><dd className="break-words text-sm text-slate-900">{value}</dd></div>)}</dl><p className="mt-4 text-xs leading-relaxed text-slate-500">Submitting sends this enquiry to KEDGE for follow-up. It is not an insurance quote, policy, or confirmation of cover.</p></section>}
+          <div className="mt-7 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-between">{step > 1 ? <button type="button" onClick={() => { setErrors({}); setStep(step - 1); }} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700"><ArrowLeft className="h-4 w-4"/>Back</button> : <span/>}<button type="submit" disabled={loading} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#c51f1f] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a81717] disabled:opacity-60">{loading ? 'Submitting…' : step === 3 ? 'Submit enquiry' : 'Continue'}{step < 3 && <ArrowRight className="h-4 w-4"/>}</button></div>
+        </form>
+      </>}
+    </div></div></div>;
 };
+
+function Field({ id, label, value, onChange, error, type = 'text', placeholder, required = false }: { id: string; label: string; value: string; onChange: (value: string) => void; error?: string; type?: string; placeholder?: string; required?: boolean }) {
+  return <div className="mt-4"><label htmlFor={id} className="text-sm font-semibold text-slate-700">{label}{required && <> <span className="text-red-700">*</span></>}</label><input id={id} type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} required={required} aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 focus:border-[#0a192f] focus:outline-none focus:ring-2 focus:ring-[#0a192f]"/>{error && <p id={`${id}-error`} className="mt-1 text-sm text-red-700" role="alert">{error}</p>}</div>;
+}

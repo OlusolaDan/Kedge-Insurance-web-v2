@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
+import { QuickContact } from './components/layout/QuickContact';
+import { applyPageSeo } from './data/seo';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
+import { CategoryServicesPage, ServicesLandingPage } from './pages/CategoryServicesPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { IndustriesPage } from './pages/IndustriesPage';
 import { RiskManagementPage } from './pages/RiskManagementPage';
@@ -24,7 +27,13 @@ export default function App() {
 
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-  const [preselectedQuoteService, setPreselectedQuoteService] = useState<string | null>(null);
+  const [preselectedQuoteService, setPreselectedQuoteService] = useState<string | null>(() => {
+    return new URLSearchParams(window.location.search).get('service');
+  });
+
+  useEffect(() => {
+    applyPageSeo(currentPath);
+  }, [currentPath]);
 
   // Sync with browser back/forward buttons
   useEffect(() => {
@@ -32,8 +41,7 @@ export default function App() {
       setCurrentPath(window.location.pathname || '/');
       // check search params if any
       const params = new URLSearchParams(window.location.search);
-      const s = params.get('service');
-      if (s) setPreselectedQuoteService(s);
+      setPreselectedQuoteService(params.get('service'));
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -45,8 +53,9 @@ export default function App() {
     const [pathPart, queryPart] = toPath.split('?');
     if (queryPart) {
       const params = new URLSearchParams(queryPart);
-      const s = params.get('service');
-      if (s) setPreselectedQuoteService(s);
+      setPreselectedQuoteService(params.get('service'));
+    } else {
+      setPreselectedQuoteService(null);
     }
 
     if (toPath !== window.location.pathname + window.location.search) {
@@ -67,7 +76,7 @@ export default function App() {
             navigate={navigate}
             onSelectService={(id) => {
               setSelectedServiceId(id);
-              navigate('/services');
+              navigate('/insurance-directory');
             }}
             onSelectArticle={(id) => {
               setSelectedArticleId(id);
@@ -81,6 +90,11 @@ export default function App() {
 
       case '/services':
         return (
+          <ServicesLandingPage navigate={navigate} />
+        );
+
+      case '/insurance-directory':
+        return (
           <ServicesPage
             navigate={navigate}
             selectedServiceId={selectedServiceId}
@@ -88,10 +102,21 @@ export default function App() {
           />
         );
 
+      case '/services/motor':
+      case '/services/marine-aviation':
+      case '/services/property-engineering':
+      case '/services/liability':
+      case '/services/life-personal':
+      case '/services/commercial-specialist':
+        return <CategoryServicesPage navigate={navigate} slug={cleanPath.replace('/services/', '')} />;
+
       case '/industries':
         return <IndustriesPage navigate={navigate} />;
 
       case '/risk-management':
+        return <RiskManagementPage navigate={navigate} />;
+
+      case '/news-events/risk-advisory':
         return <RiskManagementPage navigate={navigate} />;
 
       case '/insights':
@@ -143,7 +168,18 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen text-slate-800 bg-slate-50 selection:bg-red-700 selection:text-white">
       {/* Global Navigation Header */}
-      <Header currentPath={currentPath} navigate={navigate} />
+      <Header
+        currentPath={currentPath}
+        navigate={navigate}
+        onSelectService={(id) => {
+          setSelectedServiceId(id);
+          navigate('/insurance-directory');
+        }}
+        onSelectArticle={(id) => {
+          setSelectedArticleId(id);
+          navigate('/insights');
+        }}
+      />
 
       {/* Main Content Viewport */}
       <main className="flex-1">
@@ -152,6 +188,7 @@ export default function App() {
 
       {/* Global Corporate Footer */}
       <Footer navigate={navigate} />
+      <QuickContact />
     </div>
   );
 }

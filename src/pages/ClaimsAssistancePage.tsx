@@ -95,7 +95,7 @@ export const ClaimsAssistancePage: React.FC<ClaimsAssistancePageProps> = ({ navi
 
         {/* Emergency Claims Contact Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2">
+          <div className="premium-card bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2">
             <div className="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
               <Phone className="w-4 h-4" />
             </div>
@@ -106,7 +106,7 @@ export const ClaimsAssistancePage: React.FC<ClaimsAssistancePageProps> = ({ navi
             {COMPANY_CONFIG.phoneNumbers.primary ? <a href={`tel:${COMPANY_CONFIG.phoneNumbers.primary}`} className="text-xs font-bold text-[#0a192f] hover:text-[#c51f1f] block pt-1">{COMPANY_CONFIG.phoneNumbers.primary}</a> : <p className="text-xs text-slate-500">Telephone details awaiting confirmation.</p>}
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2">
+          <div className="premium-card bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2">
             <div className="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
               <Mail className="w-4 h-4" />
             </div>
@@ -117,7 +117,7 @@ export const ClaimsAssistancePage: React.FC<ClaimsAssistancePageProps> = ({ navi
             {COMPANY_CONFIG.emails.claimsSupport ? <a href={`mailto:${COMPANY_CONFIG.emails.claimsSupport}`} className="text-xs font-bold text-[#0a192f] hover:text-[#c51f1f] block pt-1">{COMPANY_CONFIG.emails.claimsSupport}</a> : <p className="text-xs text-slate-500">Email details awaiting confirmation.</p>}
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2">
+          <div className="premium-card bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-2">
             <div className="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
               <Clock className="w-4 h-4" />
             </div>

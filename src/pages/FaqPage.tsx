@@ -14,7 +14,7 @@ interface FaqItem {
 export const FaqPage: React.FC<FaqPageProps> = ({ navigate }) => {
   const [activeIdx, setActiveIdx] = useState<number | null>(0);
   const [activeCategory, setActiveCategory] = useState<string>('All');
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>(() => new URLSearchParams(window.location.search).get('search') ?? '');
 
   const faqs: FaqItem[] = [
     {
@@ -62,15 +62,32 @@ export const FaqPage: React.FC<FaqPageProps> = ({ navigate }) => {
       q: 'What is a policy deductible or excess?',
       a: 'A deductible (or excess) is the agreed initial portion of an insured loss that the policyholder agrees to bear before the insurance policy responds. For instance, on a motor policy with a ₦50,000 deductible, if accident repairs cost ₦350,000, you pay ₦50,000 and the insurer pays ₦300,000. Agreeing to a higher voluntary deductible can significantly reduce your annual premium.',
     },
+    { category: 'Insurance Basics', q: 'What is insurance?', a: 'Insurance is a contract under which an insurer agrees to provide specified financial protection against identified risks in return for a premium. The policy wording, limits, conditions and exclusions determine the actual response.' },
+    { category: 'Insurance Basics', q: 'Why do individuals and businesses need insurance?', a: 'Insurance can help transfer selected financial consequences of unexpected events, protect assets and support continuity. It does not eliminate risk or guarantee recovery for every loss.' },
+    { category: 'Choosing Cover', q: 'How do I determine which insurance cover my business needs?', a: 'Start with your activities, assets, people, contracts, locations, supply chain and likely liabilities. A broker can help identify exposures, compare suitable options and flag areas requiring management or legal review.' },
+    { category: 'Choosing Cover', q: 'What information is required to obtain an insurance quotation?', a: 'The information depends on the class of cover but may include business activities, locations, values, claims history, security arrangements, vehicle or asset schedules and existing policy details.' },
+    { category: 'Policies & Premiums', q: 'How is an insurance premium determined?', a: 'Premiums are based on the risk presented, the cover requested, sums insured, limits, claims history, deductibles, risk controls and the insurer’s underwriting terms. There is no single fixed premium for every customer.' },
+    { category: 'Policies & Premiums', q: 'When does insurance cover commence?', a: 'Cover commences only when the insurer has accepted the risk and the effective date, premium and other conditions have been confirmed in the relevant documentation. Do not rely on an unconfirmed quotation.' },
+    { category: 'Policies & Premiums', q: 'What are policy exclusions and limits?', a: 'Exclusions identify circumstances or losses the policy does not cover. Limits cap the insurer’s responsibility for a loss or benefit. Both should be reviewed with the schedule and full wording.' },
+    { category: 'Motor & NIID', q: 'What is the difference between third-party and comprehensive motor insurance?', a: 'Third-party cover generally addresses specified liabilities to other people or property. Comprehensive cover may also include damage or loss involving the insured vehicle, but the exact scope depends on the policy terms.' },
+    { category: 'Motor & NIID', q: 'What should a policyholder do after a motor accident?', a: 'Prioritise safety, contact emergency services where appropriate, take reasonable steps to prevent further loss, record details and notify the insurer or KEDGE promptly. Avoid admitting liability or authorising permanent repairs before guidance.' },
+    { category: 'Property & Business', q: 'What is the purpose of fire insurance?', a: 'Fire insurance is intended to protect specified property against fire and any additional perils expressly included. The sum insured, valuation basis, exclusions, warranties and loss-adjustment terms remain important.' },
+    { category: 'Property & Business', q: 'What is business interruption insurance?', a: 'Business interruption cover may help address defined lost income or continuing expenses after insured physical damage causes interruption. It normally requires an underlying insured event and an agreed indemnity period.' },
+    { category: 'Claims & Disputes', q: 'How do I notify KEDGE about a claim?', a: 'Use the existing claims assistance or contact route as soon as reasonably possible and provide the policy reference, date and description of the event, immediate actions taken and available supporting documents.' },
+    { category: 'Claims & Disputes', q: 'Why might an insurer request additional information?', a: 'The insurer or appointed loss adjuster may need further evidence to establish the circumstances, cause, value, ownership, policy response or compliance with policy conditions.' },
+    { category: 'Renewals & Servicing', q: 'Why should I review my policy before renewal?', a: 'A review helps identify changed operations, assets, values, locations, staff, contracts, claims or limits before renewal. It can also highlight gaps, outdated schedules or conditions that need attention.' },
+    { category: 'Renewals & Servicing', q: 'What should I do if my business operations or insured assets change?', a: 'Tell KEDGE or the insurer before the change where possible. A change in use, value, location, ownership, activity or security may require an endorsement, revised schedule or new policy terms.' },
+    { category: 'Regulation', q: 'How can I check whether an insurance requirement is compulsory?', a: 'Check the current legislation and regulator guidance relevant to the activity, and obtain professional advice for the specific facts. Compulsory requirements can depend on the risk, sector, location and current rules.' },
+    { category: 'Regulation', q: 'Where can I find reliable information about Nigerian insurance regulation?', a: 'Use current publications from NAICOM and applicable legislation, and confirm interpretation with a qualified Nigerian insurance or legal professional. This FAQ is educational and is not a substitute for those sources.' },
   ];
 
-  const categories = ['All', 'Brokers & Value', 'Compulsory Insurances', 'Motor & NIID', 'Claims & Disputes', 'Policies & Premiums'];
+  const categories = ['All', 'Insurance Basics', 'Choosing Cover', 'Brokers & Value', 'Compulsory Insurances', 'Motor & NIID', 'Property & Business', 'Claims & Disputes', 'Policies & Premiums', 'Renewals & Servicing', 'Regulation'];
 
   const filteredFaqs = faqs.filter((item) => {
     const matchesCat = activeCategory === 'All' || item.category === activeCategory;
-    const matchesSearch =
-      item.q.toLowerCase().includes(search.toLowerCase()) ||
-      item.a.toLowerCase().includes(search.toLowerCase());
+    const searchTerms = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const searchableText = `${item.q} ${item.a} ${item.category}`.toLowerCase();
+    const matchesSearch = searchTerms.every((term) => searchableText.includes(term));
     return matchesCat && matchesSearch;
   });
 
@@ -123,13 +140,16 @@ export const FaqPage: React.FC<FaqPageProps> = ({ navigate }) => {
         <div className="space-y-3">
           {filteredFaqs.map((faq, idx) => {
             const isOpen = activeIdx === idx;
+            const answerId = `faq-answer-${idx}`;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs"
+                className="premium-card bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs"
               >
                 <button
                   onClick={() => setActiveIdx(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
+                  aria-controls={answerId}
                   className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0a192f]"
                 >
                   <span className="text-sm font-bold text-slate-900 font-display">
@@ -142,7 +162,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ navigate }) => {
                   )}
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 animate-in fade-in duration-100">
+                  <div id={answerId} role="region" className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 animate-in fade-in duration-100">
                     <p>{faq.a}</p>
                     <div className="mt-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                       Category: {faq.category}

@@ -6,6 +6,13 @@ interface ContactPageProps {
   navigate: (path: string) => void;
 }
 
+type ContactResponse = {
+  success: boolean;
+  reference?: string;
+  message?: string;
+  errors?: Record<string, string>;
+};
+
 export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +25,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
-  const [successData, setSuccessData] = useState<any | null>(null);
+  const [successData, setSuccessData] = useState<ContactResponse | null>(null);
   const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,7 +59,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/submit.php', {
+      const response = await fetch(import.meta.env.DEV ? '/api/contact' : '/api/submit.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -67,7 +74,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json() as ContactResponse;
 
       if (!response.ok || !data.success) {
         if (data.errors) setErrors(data.errors);
@@ -76,7 +83,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
         setSuccessData(data);
         window.scrollTo({ top: 100, behavior: 'smooth' });
       }
-    } catch (err: any) {
+    } catch {
       setServerError('Network error connecting to KEDGE backend. Please try again.');
     } finally {
       setLoading(false);
@@ -155,14 +162,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
             <div className="grid grid-cols-2 gap-3 text-xs">
               <button
                 onClick={() => navigate('/claims-assistance')}
-                className="p-4 bg-white rounded-xl border border-slate-200 text-left hover:border-slate-300 shadow-xs"
+                className="premium-card p-4 bg-white rounded-xl border border-slate-200 text-left shadow-xs"
               >
                 <span className="font-bold text-[#0a192f] block">Claims Help</span>
                 <span className="text-slate-500 text-[11px] mt-0.5 block">Step-by-step reporting</span>
               </button>
               <button
                 onClick={() => navigate('/renewal-enquiry')}
-                className="p-4 bg-white rounded-xl border border-slate-200 text-left hover:border-slate-300 shadow-xs"
+                className="premium-card p-4 bg-white rounded-xl border border-slate-200 text-left shadow-xs"
               >
                 <span className="font-bold text-[#0a192f] block">Renewals</span>
                 <span className="text-slate-500 text-[11px] mt-0.5 block">Audit existing policy</span>
@@ -223,7 +230,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
                 </p>
 
                 {serverError && (
-                  <div className="mb-5 p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2">
+                  <div className="mb-5 p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2" role="alert" aria-live="assertive">
                     <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                     <span>{serverError}</span>
                   </div>
@@ -232,60 +239,70 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      <label htmlFor="contact-full-name" className="block text-xs font-semibold text-slate-700 mb-1">
                         Full Name <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="contact-full-name"
                         type="text"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="e.g. Olumide Johnson"
+                        aria-invalid={Boolean(errors.fullName)}
+                        aria-describedby={errors.fullName ? 'contact-full-name-error' : undefined}
                         className={`w-full px-3.5 py-2 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                           errors.fullName ? 'border-red-500' : 'border-slate-300'
                         }`}
                       />
-                      {errors.fullName && <p className="text-[11px] text-red-600 mt-1">{errors.fullName}</p>}
+                      {errors.fullName && <p id="contact-full-name-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.fullName}</p>}
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-700 mb-1">
                         Email Address <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="contact-email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="olumide@example.com"
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? 'contact-email-error' : undefined}
                         className={`w-full px-3.5 py-2 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                           errors.email ? 'border-red-500' : 'border-slate-300'
                         }`}
                       />
-                      {errors.email && <p className="text-[11px] text-red-600 mt-1">{errors.email}</p>}
+                      {errors.email && <p id="contact-email-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.email}</p>}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      <label htmlFor="contact-phone" className="block text-xs font-semibold text-slate-700 mb-1">
                         Telephone Number <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="contact-phone"
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="0802 345 6789"
+                        aria-invalid={Boolean(errors.phone)}
+                        aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
                         className={`w-full px-3.5 py-2 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                           errors.phone ? 'border-red-500' : 'border-slate-300'
                         }`}
                       />
-                      {errors.phone && <p className="text-[11px] text-red-600 mt-1">{errors.phone}</p>}
+                      {errors.phone && <p id="contact-phone-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.phone}</p>}
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      <label htmlFor="contact-enquiry-type" className="block text-xs font-semibold text-slate-700 mb-1">
                         Nature of Enquiry
                       </label>
                       <select
+                        id="contact-enquiry-type"
                         value={enquiryType}
                         onChange={(e) => setEnquiryType(e.target.value)}
                         className="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f]"
@@ -300,10 +317,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-700 mb-1">
                       Subject
                     </label>
                     <input
+                      id="contact-subject"
                       type="text"
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
@@ -313,27 +331,33 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-700 mb-1">
                       Message Details <span className="text-red-500">*</span>
                     </label>
                     <textarea
+                      id="contact-message"
                       rows={4}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Please share context regarding your organisation, current insurers, or specific questions..."
+                      aria-invalid={Boolean(errors.message)}
+                      aria-describedby={errors.message ? 'contact-message-error' : undefined}
                       className={`w-full px-3.5 py-2 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                         errors.message ? 'border-red-500' : 'border-slate-300'
                       }`}
                     />
-                    {errors.message && <p className="text-[11px] text-red-600 mt-1">{errors.message}</p>}
+                    {errors.message && <p id="contact-message-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.message}</p>}
                   </div>
 
                   <div>
                     <label className="flex items-start gap-2.5 cursor-pointer">
                       <input
+                        id="contact-privacy-consent"
                         type="checkbox"
                         checked={privacyConsent}
                         onChange={(e) => setPrivacyConsent(e.target.checked)}
+                        aria-invalid={Boolean(errors.privacyConsent)}
+                        aria-describedby={errors.privacyConsent ? 'contact-privacy-error' : undefined}
                         className="w-4 h-4 text-red-600 rounded border-slate-300 focus:ring-red-500 mt-0.5"
                       />
                       <span className="text-xs text-slate-600 leading-relaxed">
@@ -341,7 +365,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
                       </span>
                     </label>
                     {errors.privacyConsent && (
-                      <p className="text-[11px] text-red-600 mt-1 ml-6.5">{errors.privacyConsent}</p>
+                      <p id="contact-privacy-error" className="text-[11px] text-red-600 mt-1 ml-6.5" role="alert">{errors.privacyConsent}</p>
                     )}
                   </div>
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrandLogo } from '../common/BrandLogo';
 import { COMPANY_CONFIG } from '../../data/companyConfig';
+import naicomLogo from '../../assets/regulatory logos/NAICOM-Logo.png';
+import ncribLogo from '../../assets/regulatory logos/NCRIB-LOGO.png';
 import { MapPin, Phone, Mail, Clock, Shield, FileText, CheckCircle2 } from 'lucide-react';
 
 interface FooterProps {
@@ -12,6 +14,9 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
     navigate(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  const internalLink = (path: string, className: string, children: React.ReactNode) => (
+    <a href={path} onClick={(event) => { event.preventDefault(); handleNav(path); }} className={className}>{children}</a>
+  );
 
   return (
     <footer className="bg-[#0a192f] text-slate-300 border-t border-slate-800">
@@ -20,21 +25,26 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Column 1: Brand & Identity */}
           <div className="lg:col-span-2 space-y-4">
-            <button
-              onClick={() => handleNav('/')}
-              className="text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
-            >
-              <BrandLogo variant="light" showSlogan={true} />
-            </button>
+            {internalLink('/', 'text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded', <BrandLogo variant="light" showSlogan={true} />)}
             <p className="text-sm text-slate-300 leading-relaxed max-w-sm pt-2">
               KEDGE Insurance Brokers Ltd is a client-focused Nigerian insurance brokerage and risk advisory firm. We help corporate organisations, commercial enterprises, SMEs, and individuals identify risk exposures, structure appropriate insurance coverage, and achieve dependable claims advocacy.
             </p>
             <div className="pt-2 text-xs text-slate-400 space-y-1 border-t border-slate-800/80">
-              <p className="font-semibold text-slate-300">Regulatory & Industry Affiliation:</p>
-              <p>Regulatory status and registration details should be confirmed against current NAICOM records before publication.</p>
-              <p className="text-slate-400">
-                Official Licencing & Registration: <span className="text-amber-300">{COMPANY_CONFIG.regulatory.statusNote}</span>
+              <p className="font-semibold text-slate-300">Regulatory & Industry Credentials:</p>
+              <p>{COMPANY_CONFIG.regulatory.statusNote}</p>
+              <p className="font-mono text-[11px] text-slate-300">
+                NAICOM: {COMPANY_CONFIG.regulatory.naicomLicenceNumber} · NCRIB: {COMPANY_CONFIG.regulatory.ncribMembershipNumber} · CAC: {COMPANY_CONFIG.regulatory.cacRegistrationNumber}
               </p>
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex items-center gap-2 rounded-md bg-white px-2 py-1.5">
+                  <img src={naicomLogo} alt="National Insurance Commission (NAICOM) logo" width={48} height={48} loading="lazy" decoding="async" className="h-12 w-12 object-contain" />
+                  <span className="text-[11px] font-semibold leading-4 text-slate-800">NAICOM<br />Licensed</span>
+                </div>
+                <div className="flex items-center gap-2 rounded-md bg-white px-2 py-1.5">
+                  <img src={ncribLogo} alt="Nigerian Council of Registered Insurance Brokers (NCRIB) logo" width={48} height={48} loading="lazy" decoding="async" className="h-12 w-12 object-contain" />
+                  <span className="text-[11px] font-semibold leading-4 text-slate-800">NCRIB<br />Member</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -45,52 +55,22 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => handleNav('/about')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  About KEDGE
-                </button>
+                {internalLink('/about', 'hover:text-white transition-colors text-slate-300', 'About KEDGE')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/about')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Corporate Philosophy
-                </button>
+                {internalLink('/about', 'hover:text-white transition-colors text-slate-300', 'Corporate Philosophy')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/services')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Insurance Directory
-                </button>
+                {internalLink('/insurance-directory', 'hover:text-white transition-colors text-slate-300', 'Insurance Directory')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/industries')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Industries Served
-                </button>
+                {internalLink('/industries', 'hover:text-white transition-colors text-slate-300', 'Industries Served')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/risk-management')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Risk Advisory Framework
-                </button>
+                {internalLink('/risk-management', 'hover:text-white transition-colors text-slate-300', 'Risk Advisory Framework')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/insights')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Insurance Insights & Law
-                </button>
+                {internalLink('/insights', 'hover:text-white transition-colors text-slate-300', 'Insurance Insights & Law')}
               </li>
             </ul>
           </div>
@@ -102,53 +82,22 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => handleNav('/quote')}
-                  className="text-white font-medium hover:text-red-400 transition-colors"
-                >
-                  Request a Quote
-                </button>
+                {internalLink('/quote', 'text-white font-medium hover:text-red-400 transition-colors', 'Request a Quote')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/claims-assistance')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Claims Support & Process
-                </button>
+                {internalLink('/claims-assistance', 'hover:text-white transition-colors text-slate-300', 'Claims Support & Process')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/renewal-enquiry')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Policy Renewal Review
-                </button>
+                {internalLink('/renewal-enquiry', 'hover:text-white transition-colors text-slate-300', 'Policy Renewal Review')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/faq')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Frequently Asked Questions
-                </button>
+                {internalLink('/faq', 'hover:text-white transition-colors text-slate-300', 'Frequently Asked Questions')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/coverage-matrix')}
-                  className="hover:text-white transition-colors text-slate-300 flex items-center gap-1.5"
-                >
-                  <span>NAICOM Coverage Matrix</span>
-                  <span className="text-[10px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">Audit</span>
-                </button>
+                {internalLink('/coverage-matrix', 'hover:text-white transition-colors text-slate-300', 'NAICOM Coverage Matrix')}
               </li>
               <li>
-                <button
-                  onClick={() => handleNav('/contact')}
-                  className="hover:text-white transition-colors text-slate-300"
-                >
-                  Office Location & Contact
-                </button>
+                {internalLink('/contact', 'hover:text-white transition-colors text-slate-300', 'Office Location & Contact')}
               </li>
             </ul>
           </div>
@@ -230,26 +179,11 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
               &copy; {new Date().getFullYear()} KEDGE Insurance Brokers Ltd. All rights reserved. Registered in the Federal Republic of Nigeria.
             </p>
             <div className="flex flex-wrap items-center gap-5 text-slate-400">
-              <button
-                onClick={() => handleNav('/privacy-policy')}
-                className="hover:text-white transition-colors"
-              >
-                Privacy Notice (NDPA 2023)
-              </button>
+              {internalLink('/privacy-policy', 'hover:text-white transition-colors', 'Privacy Notice (NDPA 2023)')}
               <span>·</span>
-              <button
-                onClick={() => handleNav('/terms')}
-                className="hover:text-white transition-colors"
-              >
-                Terms of Use
-              </button>
+              {internalLink('/terms', 'hover:text-white transition-colors', 'Terms of Use')}
               <span>·</span>
-              <button
-                onClick={() => handleNav('/coverage-matrix')}
-                className="hover:text-white transition-colors"
-              >
-                Coverage Verification Matrix
-              </button>
+              {internalLink('/coverage-matrix', 'hover:text-white transition-colors', 'NAICOM Coverage Matrix')}
             </div>
           </div>
         </div>

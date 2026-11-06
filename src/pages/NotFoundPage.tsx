@@ -25,29 +25,20 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ navigate }) => {
         </div>
 
         <div className="pt-2 space-y-2.5">
-          <button
-            onClick={() => navigate('/')}
-            className="w-full py-2.5 px-4 text-xs font-semibold text-white bg-[#0a192f] hover:bg-slate-800 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2"
-          >
+          <a href="/" onClick={(event) => { event.preventDefault(); navigate('/'); }} className="w-full py-2.5 px-4 text-xs font-semibold text-white bg-[#0a192f] hover:bg-slate-800 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
             <Home className="w-4 h-4" />
             <span>Return to Homepage</span>
-          </button>
+          </a>
 
-          <button
-            onClick={() => navigate('/services')}
-            className="w-full py-2.5 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center justify-center gap-2"
-          >
+          <a href="/services" onClick={(event) => { event.preventDefault(); navigate('/services'); }} className="w-full py-2.5 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center justify-center gap-2">
             <Compass className="w-4 h-4" />
             <span>Browse Insurance Directory</span>
-          </button>
+          </a>
 
-          <button
-            onClick={() => navigate('/contact')}
-            className="w-full py-2.5 px-4 text-xs font-semibold text-[#c51f1f] bg-red-50 hover:bg-red-100 rounded-lg transition-colors flex items-center justify-center gap-2"
-          >
+          <a href="/contact" onClick={(event) => { event.preventDefault(); navigate('/contact'); }} className="w-full py-2.5 px-4 text-xs font-semibold text-[#c51f1f] bg-red-50 hover:bg-red-100 rounded-lg transition-colors flex items-center justify-center gap-2">
             <PhoneCall className="w-4 h-4" />
             <span>Contact Advisory Desk</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -1,11 +1,16 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, CheckCircle2, TrendingUp, Building2, Anchor, Truck, Flame, Users, Briefcase, FileText, HelpCircle, PhoneCall } from 'lucide-react';
+import { ArrowRight, ShieldCheck, TrendingUp, FileText } from 'lucide-react';
 import { INSURANCE_SERVICES } from '../data/servicesData';
 import { INDUSTRY_SECTORS } from '../data/industriesData';
 import { INSIGHT_ARTICLES } from '../data/insightsData';
 import { COMPANY_CONFIG } from '../data/companyConfig';
-import heroImagePath from '../assets/images/hero_commercial_port_1792794885795.jpg';
-import advisoryImagePath from '../assets/images/corporate_advisory_team_1792794886967.jpg';
+import heroImagePath from '../assets/images/hero_commercial_port_1792794885795-optimized.jpg';
+import heroImageMobilePath from '../assets/images/hero_commercial_port_mobile.jpg';
+import advisoryImagePath from '../assets/images/corporate_advisory_team_1792794886967-optimized.jpg';
+import fleetImagePath from '../assets/images/commercial_fleet_logistics_1792794886504-optimized.jpg';
+import industrialImagePath from '../assets/images/industrial_manufacturing_risk_1792794886757-optimized.jpg';
+import { CustomerLogoCarousel } from '../components/common/CustomerLogoCarousel';
+import { HeroCarousel, type HeroSlide } from '../components/common/HeroCarousel';
 
 interface HomePageProps {
   navigate: (path: string) => void;
@@ -21,159 +26,77 @@ export const HomePage: React.FC<HomePageProps> = ({
   const featuredServices = INSURANCE_SERVICES.slice(0, 6);
   const featuredIndustries = INDUSTRY_SECTORS.slice(0, 4);
   const featuredArticles = INSIGHT_ARTICLES.slice(0, 3);
+  const heroSlides: HeroSlide[] = [
+    {
+      image: heroImagePath,
+      mobileImage: heroImageMobilePath,
+      imageAlt: 'Commercial container port and cargo infrastructure at dusk',
+      eyebrow: 'MARINE & LOGISTICS',
+      accent: 'Protecting goods in motion',
+      title: 'Protection for What Matters. Confidence for What Comes Next.',
+      body: 'From businesses and infrastructure to people and valuable assets, KEDGE helps clients understand their risks and make informed insurance decisions.',
+    },
+    {
+      image: advisoryImagePath,
+      imageAlt: 'Business advisers collaborating around risk documents in a boardroom',
+      eyebrow: 'INSURANCE BROKING',
+      accent: 'Advice built around your risks',
+      title: 'Clear Advice for Complex Business Decisions.',
+      body: 'Our brokers help you explore appropriate protection, compare policy options and move forward with a clearer view of your risk landscape.',
+    },
+    {
+      image: fleetImagePath,
+      imageAlt: 'Commercial fleet vehicles supporting logistics operations',
+      eyebrow: 'MOTOR & FLEET',
+      accent: 'Keep your operations moving',
+      title: 'Cover for the Vehicles Your Business Depends On.',
+      body: 'Build practical protection for commercial vehicles, goods in transit and the people who keep your distribution network moving.',
+    },
+    {
+      image: industrialImagePath,
+      imageAlt: 'Industrial manufacturing facility and operational equipment',
+      eyebrow: 'PROPERTY & INDUSTRIAL',
+      accent: 'Strengthen business continuity',
+      title: 'Prepare Your Assets for the Risks Ahead.',
+      body: 'From property and equipment to operational interruption, we help businesses consider the exposures that can affect continuity and resilience.',
+    },
+  ];
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* 1. HERO SECTION — PREMIUM CORPORATE DESIGN */}
-      <section className="relative min-h-[580px] lg:min-h-[660px] flex items-center bg-[#0a192f] text-white overflow-hidden">
-        {/* Background Image with Controlled Navy Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={heroImagePath}
-            alt="Aerial view of commercial maritime container port and maritime infrastructure in Nigeria at dusk"
-            className="w-full h-full object-cover object-center opacity-35 filter brightness-95"
-            referrerPolicy="no-referrer"
-          />
-          {/* Measured Navy Contrast Gradient Scrim */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a192f] via-[#0a192f]/90 to-[#0a192f]/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-transparent to-transparent opacity-80" />
-        </div>
+      <HeroCarousel slides={heroSlides} onNavigate={navigate} />
 
-        {/* Hero Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="max-w-3xl">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-800/80 border border-slate-700/60 text-slate-200 text-xs font-semibold tracking-wider uppercase mb-5">
-              <span>INSURANCE BROKING</span>
-              <span className="text-red-400">|</span>
-              <span>RISK ADVISORY</span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="hero-intro hero-intro-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-display leading-[1.15] text-balance">
-              Protection for What Matters. Confidence for What Comes Next.
-            </h1>
-
-            {/* Supporting Text */}
-            <p className="hero-intro hero-intro-supporting mt-5 text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl">
-              From businesses and infrastructure to people and valuable assets, KEDGE Insurance Brokers helps clients understand their risks, explore appropriate insurance protection and make informed insurance decisions.
-            </p>
-
-            {/* CTA Group */}
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <button
-                onClick={() => navigate('/quote')}
-                className="inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold text-white bg-[#c51f1f] hover:bg-[#a81717] rounded-lg shadow-md transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#c51f1f]"
-              >
-                <span>Request a Quote</span>
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </button>
-
-              <button
-                onClick={() => navigate('/services')}
-                className="inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold text-white bg-slate-800/80 hover:bg-slate-700/90 border border-slate-600/80 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              >
-                Explore Our Services
-              </button>
-            </div>
-
-            {/* Supporting Trust Statements */}
-            <div className="mt-10 pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-6 text-xs text-slate-300 font-medium">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Trusted guidance for people and businesses</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Risk-led advisory approach</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>NAICOM regulatory alignment</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. STATUTORY & PROOF STRIP */}
+      {/* COMPANY VALUE SUMMARY */}
       <section className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
-            <div className="border-l-0 md:border-l first:border-l-0 border-slate-200 pl-0 md:pl-6">
-              <p className="text-2xl lg:text-3xl font-bold text-[#0a192f] font-display tabular-nums">100%</p>
-              <p className="text-xs text-slate-600 mt-1 font-medium">Independent Client Advocacy</p>
-              <p className="text-[11px] text-slate-600">Representing policyholders, not underwriters</p>
-            </div>
-            <div className="border-l-0 md:border-l border-slate-200 pl-0 md:pl-6">
-              <p className="text-2xl lg:text-3xl font-bold text-[#0a192f] font-display tabular-nums">20+</p>
-              <p className="text-xs text-slate-600 mt-1 font-medium">Insurance Classes Covered</p>
-              <p className="text-[11px] text-slate-600">Structured across 6 commercial portfolios</p>
-            </div>
-            <div className="border-l-0 md:border-l border-slate-200 pl-0 md:pl-6">
-              <p className="text-2xl lg:text-3xl font-bold text-[#0a192f] font-display tabular-nums">5</p>
-              <p className="text-xs text-slate-600 mt-1 font-medium">Statutory Compulsory Covers</p>
-              <p className="text-[11px] text-slate-600">Insurance advice subject to current law and policy terms</p>
-            </div>
-            <div className="border-l-0 md:border-l border-slate-200 pl-0 md:pl-6">
-              <p className="text-2xl lg:text-3xl font-bold text-[#c51f1f] font-display tabular-nums">Zero</p>
-              <p className="text-xs text-slate-600 mt-1 font-medium">Direct Broker Fee to Clients</p>
-              <p className="text-[11px] text-slate-600">Remunerated via statutory underwriter brokerage</p>
-            </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ['Insurance brokerage', 'Guidance to help clients understand their insurance needs.'],
+              ['Risk focused', 'Consider potential exposures before discussing suitable cover.'],
+              ['Personal and business', 'Insurance categories for individuals and organisations.'],
+              ['Claims support', 'Assistance navigating the claims process with the insurer.'],
+            ].map(([title, description]) => <div key={title} className="border-l-2 border-[#c51f1f] pl-4"><p className="font-semibold text-[#0a192f]">{title}</p><p className="mt-1 text-sm leading-relaxed text-slate-600">{description}</p></div>)}
           </div>
         </div>
       </section>
+
+      <CustomerLogoCarousel />
 
       {/* 3. BRIEF COMPANY INTRODUCTION & BROKER VALUE */}
       <section className="py-16 lg:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             <div className="lg:col-span-7 space-y-5">
-              <div className="text-xs font-semibold text-[#c51f1f] tracking-wider uppercase">
-                About KEDGE Insurance Brokers
-              </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0a192f] font-display leading-tight text-balance">
-                Navigating Nigerian Risk Realities with Diligence and Technical Precision
-              </h2>
-              <p className="text-base text-slate-600 leading-relaxed">
-                Operating a business or managing valuable assets in Nigeria requires navigating an intricate risk landscape. From highway logistics exposures and maritime cargo regulations to factory fire protection and mandatory employee welfare laws, unexpected hazards can jeopardize balance sheets.
-              </p>
-              <p className="text-base text-slate-600 leading-relaxed">
-                As registered insurance brokers, <strong className="text-slate-900">KEDGE acts strictly on behalf of our clients</strong>—not the insurance company. We evaluate your operational risks, compare policies across leading NAICOM-authorised underwriters, negotiate competitive premiums, and stand as your vigorous advocate during claims negotiations.
-              </p>
-
-              <div className="pt-2">
-                <button
-                  onClick={() => navigate('/about')}
-                  className="inline-flex items-center text-sm font-semibold text-[#0a192f] hover:text-[#c51f1f] transition-colors"
-                >
-                  <span>Learn more about our advisory approach</span>
-                  <ArrowRight className="w-4 h-4 ml-1.5" />
-                </button>
-              </div>
+              <div className="text-xs font-semibold text-[#c51f1f] tracking-wider uppercase">About KEDGE Insurance Brokers</div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0a192f] font-display leading-tight text-balance">Navigating Nigerian Risk Realities with Diligence and Technical Precision</h2>
+              <p className="text-base text-slate-600 leading-relaxed">Operating a business or managing valuable assets in Nigeria requires navigating an intricate risk landscape. From highway logistics exposures and maritime cargo regulations to factory fire protection and mandatory employee welfare laws, unexpected hazards can jeopardize balance sheets.</p>
+              <p className="text-base text-slate-600 leading-relaxed">As registered insurance brokers, <strong className="text-slate-900">KEDGE acts strictly on behalf of our clients</strong>—not the insurance company. We evaluate your operational risks, compare policies across leading NAICOM-authorised underwriters, negotiate competitive premiums, and stand as your vigorous advocate during claims negotiations.</p>
+              <div className="pt-2"><button onClick={() => navigate('/about')} className="inline-flex items-center text-sm font-semibold text-[#0a192f] hover:text-[#c51f1f] transition-colors"><span>Learn more about our advisory approach</span><ArrowRight className="w-4 h-4 ml-1.5" /></button></div>
             </div>
-
             <div className="lg:col-span-5">
               <div className="relative rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
-                <img
-                  src={advisoryImagePath}
-                  alt="KEDGE risk advisors collaborating in executive corporate boardroom"
-                  className="w-full h-72 object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="p-6 bg-white space-y-3">
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <span className="font-semibold text-[#0a192f]">Client Service Commitment</span>
-                    <span>·</span>
-                    <span>Lagos Advisory Desk</span>
-                  </div>
-                  <h3 className="text-base font-bold text-slate-900 font-display">
-                    “With You From Now, Into The Future”
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Our corporate promise reflects continuous partnership across the full lifecycle—from initial risk appraisal and policy design to swift claims resolution.
-                  </p>
-                </div>
+                <img src={advisoryImagePath} alt="KEDGE risk advisors collaborating in executive corporate boardroom" width={1200} height={896} className="w-full h-72 object-cover" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
+                <div className="p-6 bg-white space-y-3"><div className="flex items-center gap-2 text-xs text-slate-500"><span className="font-semibold text-[#0a192f]">Client Service Commitment</span><span>·</span><span>Advisory Desk</span></div><h3 className="text-base font-bold text-slate-900 font-display">“With You From Now, Into The Future”</h3><p className="text-xs text-slate-600 leading-relaxed">Our corporate promise reflects continuous partnership across the full lifecycle—from initial risk appraisal and policy design to swift claims resolution.</p></div>
               </div>
             </div>
           </div>
@@ -210,14 +133,14 @@ export const HomePage: React.FC<HomePageProps> = ({
             {featuredServices.map((service) => (
               <div
                 key={service.id}
-                className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
+                className="premium-card rounded-xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 text-xs text-slate-500 mb-3">
                     <span className="font-medium text-slate-700">{service.category}</span>
                     {service.isCompulsoryInNigeria && (
                       <span className="text-[11px] font-semibold text-[#c51f1f]">
-                        Statutory Compulsory
+                        {service.compulsoryApplicability === 'CONDITIONAL' ? 'Conditional' : 'Statutory Compulsory'}
                       </span>
                     )}
                   </div>
@@ -233,7 +156,6 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <button
                     onClick={() => {
                       if (onSelectService) onSelectService(service.id);
-                      navigate('/services');
                     }}
                     className="text-xs font-semibold text-[#0a192f] hover:text-[#c51f1f] transition-colors inline-flex items-center"
                   >
@@ -282,7 +204,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             {featuredIndustries.map((ind) => (
               <div
                 key={ind.id}
-                className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between"
+                className="premium-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between"
               >
                 <div>
                   <h3 className="text-base font-bold text-slate-900 font-display">
@@ -396,7 +318,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
 
-            <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-2">
+            <div className="premium-card bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-2">
               <h3 className="text-sm font-bold uppercase tracking-wider text-[#0a192f] font-display">
                 Vision
               </h3>
@@ -405,7 +327,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
             </div>
 
-            <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-2">
+            <div className="premium-card bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-2">
               <h3 className="text-sm font-bold uppercase tracking-wider text-[#0a192f] font-display">
                 Mission
               </h3>
@@ -446,7 +368,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             {featuredArticles.map((art) => (
               <article
                 key={art.id}
-                className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                className="premium-card bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">

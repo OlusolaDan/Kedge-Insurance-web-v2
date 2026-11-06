@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { INDUSTRY_SECTORS } from '../data/industriesData';
 import { IndustrySector } from '../types';
 import { ArrowRight, ShieldAlert, CheckCircle2, Factory, Truck, Building2, Anchor, ShoppingBag, Briefcase, Zap, Sprout, Landmark } from 'lucide-react';
-import industrialImg from '../assets/images/industrial_manufacturing_risk_1792794886757.jpg';
-import logisticsImg from '../assets/images/commercial_fleet_logistics_1792794886504.jpg';
+import industrialImg from '../assets/images/industrial_manufacturing_risk_1792794886757-optimized.jpg';
+import logisticsImg from '../assets/images/commercial_fleet_logistics_1792794886504-optimized.jpg';
 
 interface IndustriesPageProps {
   navigate: (path: string) => void;
@@ -53,8 +53,12 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ navigate }) => {
               <img
                 src={industrialImg}
                 alt="Industrial plant machinery safety inspection and electrical risk audit"
+                width={1200}
+                height={896}
                 className="w-full h-64 object-cover object-center"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
               <div className="p-5 bg-white">
                 <span className="text-xs font-semibold text-[#c51f1f] uppercase tracking-wider">Manufacturing & Industrial</span>
@@ -71,8 +75,12 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ navigate }) => {
               <img
                 src={logisticsImg}
                 alt="Commercial transport fleet trucks and distribution logistics hub in Nigeria"
+                width={1200}
+                height={896}
                 className="w-full h-64 object-cover object-center"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
               <div className="p-5 bg-white">
                 <span className="text-xs font-semibold text-[#c51f1f] uppercase tracking-wider">Logistics & Freight Haulage</span>

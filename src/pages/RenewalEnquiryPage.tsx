@@ -6,6 +6,13 @@ interface RenewalEnquiryPageProps {
   navigate: (path: string) => void;
 }
 
+type RenewalResponse = {
+  success: boolean;
+  reference?: string;
+  message?: string;
+  errors?: Record<string, string>;
+};
+
 export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate }) => {
   const [policyHolder, setPolicyHolder] = useState('');
   const [currentInsurer, setCurrentInsurer] = useState('');
@@ -20,7 +27,7 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
-  const [successData, setSuccessData] = useState<any | null>(null);
+  const [successData, setSuccessData] = useState<RenewalResponse | null>(null);
   const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,7 +60,7 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
     setLoading(true);
 
     try {
-      const response = await fetch('/api/submit.php', {
+      const response = await fetch(import.meta.env.DEV ? '/api/renewal' : '/api/submit.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -70,7 +77,7 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json() as RenewalResponse;
 
       if (!response.ok || !data.success) {
         if (data.errors) setErrors(data.errors);
@@ -162,7 +169,7 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
         ) : (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm">
             {serverError && (
-              <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2.5">
+              <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2.5" role="alert" aria-live="assertive">
                 <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                 <span>{serverError}</span>
               </div>
@@ -171,26 +178,30 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-policy-holder" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Policyholder / Company Name <span className="text-red-500">*</span>
                   </label>
                   <input
+                    id="renewal-policy-holder"
                     type="text"
                     value={policyHolder}
                     onChange={(e) => setPolicyHolder(e.target.value)}
                     placeholder="e.g. Dangote Cement Distributor Ltd or Chukwuma Obi"
+                    aria-invalid={Boolean(errors.policyHolder)}
+                    aria-describedby={errors.policyHolder ? 'renewal-policy-holder-error' : undefined}
                     className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                       errors.policyHolder ? 'border-red-500' : 'border-slate-300'
                     }`}
                   />
-                  {errors.policyHolder && <p className="text-[11px] text-red-600 mt-1">{errors.policyHolder}</p>}
+                  {errors.policyHolder && <p id="renewal-policy-holder-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.policyHolder}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-insurance-class" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Insurance Class to Renew <span className="text-red-500">*</span>
                   </label>
                   <select
+                    id="renewal-insurance-class"
                     value={insuranceClass}
                     onChange={(e) => setInsuranceClass(e.target.value)}
                     className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f]"
@@ -210,10 +221,11 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-current-insurer" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Current Insurance Company <span className="text-slate-400 font-normal">(Optional)</span>
                   </label>
                   <input
+                    id="renewal-current-insurer"
                     type="text"
                     value={currentInsurer}
                     onChange={(e) => setCurrentInsurer(e.target.value)}
@@ -223,10 +235,11 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-policy-number" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Existing Policy Number <span className="text-slate-400 font-normal">(Optional)</span>
                   </label>
                   <input
+                    id="renewal-policy-number"
                     type="text"
                     value={existingPolicyNumber}
                     onChange={(e) => setExistingPolicyNumber(e.target.value)}
@@ -238,10 +251,11 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-expiry-date" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Policy Expiry Date <span className="text-slate-400 font-normal">(If known)</span>
                   </label>
                   <input
+                    id="renewal-expiry-date"
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
@@ -250,43 +264,50 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-email" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Contact Email <span className="text-red-500">*</span>
                   </label>
                   <input
+                    id="renewal-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="contact@company.ng"
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? 'renewal-email-error' : undefined}
                     className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                       errors.email ? 'border-red-500' : 'border-slate-300'
                     }`}
                   />
-                  {errors.email && <p className="text-[11px] text-red-600 mt-1">{errors.email}</p>}
+                  {errors.email && <p id="renewal-email-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.email}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label htmlFor="renewal-phone" className="block text-xs font-semibold text-slate-700 mb-1.5">
                     Telephone Number <span className="text-red-500">*</span>
                   </label>
                   <input
+                    id="renewal-phone"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="0802 123 4567"
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={errors.phone ? 'renewal-phone-error' : undefined}
                     className={`w-full px-3.5 py-2.5 text-sm rounded-lg border bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0a192f] ${
                       errors.phone ? 'border-red-500' : 'border-slate-300'
                     }`}
                   />
-                  {errors.phone && <p className="text-[11px] text-red-600 mt-1">{errors.phone}</p>}
+                  {errors.phone && <p id="renewal-phone-error" className="text-[11px] text-red-600 mt-1" role="alert">{errors.phone}</p>}
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                <label htmlFor="renewal-notes" className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Renewal Audit Notes & Desired Improvements
                 </label>
                 <textarea
+                  id="renewal-notes"
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
@@ -298,9 +319,12 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
               <div>
                 <label className="flex items-start gap-2.5 cursor-pointer">
                   <input
+                    id="renewal-privacy-consent"
                     type="checkbox"
                     checked={privacyConsent}
                     onChange={(e) => setPrivacyConsent(e.target.checked)}
+                    aria-invalid={Boolean(errors.privacyConsent)}
+                    aria-describedby={errors.privacyConsent ? 'renewal-privacy-error' : undefined}
                     className="w-4 h-4 text-red-600 rounded border-slate-300 focus:ring-red-500 mt-0.5"
                   />
                   <span className="text-xs text-slate-600 leading-relaxed">
@@ -315,7 +339,7 @@ export const RenewalEnquiryPage: React.FC<RenewalEnquiryPageProps> = ({ navigate
                   </span>
                 </label>
                 {errors.privacyConsent && (
-                  <p className="text-[11px] text-red-600 mt-1 ml-6.5">{errors.privacyConsent}</p>
+                  <p id="renewal-privacy-error" className="text-[11px] text-red-600 mt-1 ml-6.5" role="alert">{errors.privacyConsent}</p>
                 )}
               </div>
 

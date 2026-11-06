@@ -1,0 +1,48 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build KEDGE dist",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"build"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Serve KEDGE dist preview",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"preview",
+				"--",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"4173",
+				"--strictPort"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Check Lighthouse CLI",
+			"type": "shell",
+			"command": "npx.cmd",
+			"args": [
+				"lighthouse",
+				"--version"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

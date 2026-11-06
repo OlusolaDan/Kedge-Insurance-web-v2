@@ -112,7 +112,7 @@ export const RiskManagementPage: React.FC<RiskManagementPageProps> = ({ navigate
             {steps.map((st) => (
               <div
                 key={st.num}
-                className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between"
+                className="premium-card bg-white rounded-xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">

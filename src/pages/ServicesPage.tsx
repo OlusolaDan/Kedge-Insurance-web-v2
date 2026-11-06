@@ -120,7 +120,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 />
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-red-600" />
-                  <span>Show Statutory Compulsory Covers Only</span>
+                  <span>Show statutory requirements only</span>
                 </span>
               </label>
 
@@ -164,13 +164,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </span>
             {compulsoryOnly && (
               <span className="text-red-700 font-semibold bg-red-50 px-2 py-0.5 rounded border border-red-200">
-                Filtered by Nigerian Statutory Compulsory Covers
+                Filtered by Nigerian statutory requirements
               </span>
             )}
           </div>
 
           {filteredServices.length === 0 ? (
-            <div className="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-md mx-auto my-8">
+            <div className="premium-card bg-white rounded-xl border border-slate-200 p-12 text-center max-w-md mx-auto my-8">
               <AlertCircle className="w-8 h-8 text-slate-400 mx-auto mb-3" />
               <h3 className="text-base font-bold text-slate-800">No matching insurance products found</h3>
               <p className="text-xs text-slate-500 mt-1">
@@ -192,14 +192,14 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               {filteredServices.map((service) => (
                 <div
                   key={service.id}
-                  className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                  className="premium-card bg-white rounded-xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 text-xs text-slate-500 mb-3">
                       <span className="font-medium text-slate-700">{service.category}</span>
                       {service.isCompulsoryInNigeria && (
                         <span className="text-[11px] font-bold text-[#c51f1f] bg-red-50 px-2 py-0.5 rounded border border-red-100">
-                          Compulsory
+                          {service.compulsoryApplicability === 'CONDITIONAL' ? 'Conditional' : 'Compulsory'}
                         </span>
                       )}
                     </div>
@@ -261,7 +261,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             {/* Modal Header */}
             <div className="sticky top-0 z-10 bg-[#0a192f] text-white px-6 py-5 flex items-start justify-between border-b border-slate-800">
               <div>
-                <div className="flex items-center gap-2 text-xs text-slate-300 mb-1">
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-300 mb-1">
                   <span>{activeDetailModal.category}</span>
                   <span>·</span>
                   <span className="text-red-400 font-mono text-[11px]">{activeDetailModal.naicomClass}</span>
@@ -288,7 +288,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 <div className="p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-900 flex items-start gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold">Statutory Compulsory Cover in Nigeria</p>
+                    <p className="font-bold">
+                      {activeDetailModal.compulsoryApplicability === 'CONDITIONAL'
+                        ? 'Statutory requirement where applicable'
+                        : 'Statutory compulsory cover in Nigeria'}
+                    </p>
                     <p className="mt-0.5 text-red-800">{activeDetailModal.statutoryBasis}</p>
                   </div>
                 </div>
